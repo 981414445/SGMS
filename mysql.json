@@ -1,0 +1,4 @@
+{
+    "MysqlSGMS":"root:root@tcp(localhost:3306)/sgms?charset=utf8mb4",
+    "Trace": true
+}

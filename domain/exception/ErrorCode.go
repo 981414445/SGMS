@@ -1,0 +1,77 @@
+package exception
+
+const (
+	OK             = 0
+	INTERNAL_ERROR = 1
+	MYSQL_ERROR    = 2
+	//参数错误
+	INVALID_PARAM = 10
+	//用户没有登录
+	USER_NO_SIGNIN = 11
+	//无权访问
+	NO_AUTHORITY      = 12
+	STRING_UTIL_ERROR = 13
+	//用户模块错误
+	//用户不存在
+	USER_NOT_EXISTS              = 100
+	USER_PASSWORD_ERROR          = 101
+	USER_DISABLED                = 102
+	USER_VERIFY_CODE_NOT_EXPIRED = 103
+	//用户已经存在
+	USER_EXISTS            = 104
+	USER_OLDPASSWORD_ERROR = 105
+	USER_TOKEN_INVALID     = 106
+
+	//活动
+	ACTIVITY_DISABLE_SIGNUPED             = 200
+	ACTIVITY_SYSTEM_NO_CONFIG             = 201
+	ACTIVITY_SYSTEM_SCHEDULE_FORMAT_ERROR = 202
+	ACTIVITY_ITEM_NO_AUTH                 = 203
+	//用户报名，没有上传证书
+	ACTIVITY_SIGNUP_NO_CERT = 204
+	//用户报名年龄不符
+	ACTIVITY_SIGNUP_INVALID_AGE = 205
+	//用户报名段位不符
+	ACTIVITY_SIGNUP_INVALID_DUAN = 206
+	ACTIVITY_NOT_EXIST           = 207
+	// 活动不可以使用代金券
+	ACTIVITY_CAN_NOT_USE_COUPON = 208
+	//订单
+	//第三方微信下单失败
+	ORDER_THIRD_WX_ORDER_ERROR = 300
+	//第三方阿里下单失败
+	ORDER_THIRD_ALIPAY_ORDER_ERROR = 301
+	ORDER_NO_SUCH_PAY_TYPE_ERROR   = 302
+	// AliyunSms error
+	ALIYUN_SMS_ERROR = 303
+	//代金券
+	COUPON_INVALID               = 400
+	COUPON_ACTIVITY_DUP          = 401
+	COUPON_USER_DUP              = 402
+	COUPON_QUANTITY_EXCEED_LIMIT = 403
+	//试卷
+	//用户权访问
+	PAPER_USER_NO_RIGHT = 500
+	PAPER_NOT_EXISTS    = 501
+
+	//课堂错误
+	COURSE_NO_AUTHORITY = 600
+	//course is full
+	COURSE_FULL = 601
+
+	//third error
+	POLYV_ERROR     = 700
+	POLYV_NO_RECORD = 701 //没有录制
+
+	//Round error
+	ROUND_USER_COUNT_ERROR = 800
+	ROUND_EMPTY            = 801
+
+	//Capacity error
+	CAPACITY_NO_TEST_MORE_QUIZ = 900
+	EVALUATION_QUIZ_ERROR      = 901
+
+	//QUIZ error
+	QUIZ_NOT_ENOUGH = 1000 //创建错题片试题不够
+
+)
