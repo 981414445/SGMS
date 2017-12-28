@@ -5,6 +5,7 @@ import (
 )
 
 func Init(app *iris.Framework) {
+	RouteUser(app)
 	// RoutePublic(app)
 	// RoutePrivate(app)
 	// RouteHome(app)
