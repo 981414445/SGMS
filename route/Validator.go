@@ -1,19 +1,14 @@
 package route
 
 import (
-	"SGMS/domain/exception"
-	"SGMS/domain/face"
-	"SGMS/domain/factory/basef"
 	"SGMS/domain/util"
 	"mime/multipart"
 	"regexp"
 	"strconv"
 	"unicode/utf8"
 
-	"image"
 	"io/ioutil"
 	"path/filepath"
-	"strings"
 
 	"github.com/asaskevich/govalidator"
 	"github.com/guregu/null"
@@ -80,12 +75,6 @@ type IFileValidator interface {
 	NotEmpty(tip ...string) IFileValidator
 	//文件最大长度，bytes
 	Len(maxBytes int, tip ...string) IFileValidator
-	//eg ["jpg","png"]
-	SuffixIn(s []string, tip ...string) IFileValidator
-	//eg. ["100x200","300x300"]
-	Resize(sizes []string, rect *image.Rectangle) (fileName string, result *face.FileSaveImageResult)
-	//保存到文件系统，返回文件名和文件路径很
-	Save() (fileName string, fileURL string)
 	//获取文件字节内容
 	Byte() (fileName string, content []byte)
 	//获取文件内容
@@ -523,48 +512,7 @@ func (this *FileValidator) SuffixIn(s []string, tip ...string) IFileValidator {
 	}
 	return this
 }
-func (this *FileValidator) Resize(sizes []string, rect *image.Rectangle) (fileName string, result *face.FileSaveImageResult) {
-	f, err := this.file.Open()
-	if nil != err {
-		panic(err)
-	}
-	defer f.Close()
-	fileName = this.file.Filename
-	result, err = basef.NewFileRepo().SaveImage(f, fileName, sizes, rect)
-	if nil != err {
-		panic(exception.NewParamError(map[string]string{this.Name: "请添加图片！"}))
-	}
-	return
-}
-func (this *FileValidator) Save() (fileName string, fileURL string) {
-	f, err := this.file.Open()
-	if nil != err {
-		panic(err)
-	}
-	defer f.Close()
-	fileName = this.file.Filename
-	ext := strings.ToLower(filepath.Ext(fileName))
-	if ext == ".png" || ext == ".jpg" || ext == ".jpeg" || ext == ".gif" || ext == ".bmp" {
-		repo, err := basef.NewFileRepo().SaveImage(f, fileName, nil, nil)
-		fileURL = repo.RawImage
-		if nil != err {
-			panic(exception.NewParamError(map[string]string{this.Name: "请添加图片！"}))
-		}
-		return
-	}
-	if ext == ".doc" {
-		fileURL, err = basef.NewFileRepo().Save(f, face.FILE_REPO_TYPE_DOC, fileName)
-		if nil != err {
-			panic(exception.NewParamError(map[string]string{this.Name: "文件不正确！"}))
-		}
-		return
-	}
-	fileURL, err = basef.NewFileRepo().Save(f, face.FILE_REPO_TYPE_BIN, fileName)
-	if nil != err {
-		panic(exception.NewParamError(map[string]string{this.Name: "保存文件失败"}))
-	}
-	return
-}
+
 func (this *FileValidator) Byte() (fileName string, content []byte) {
 	f, err := this.file.Open()
 	if nil != err {

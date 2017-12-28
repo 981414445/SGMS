@@ -2,7 +2,6 @@ package route
 
 import (
 	"SGMS/domain/face"
-	"SGMS/domain/factory/userf"
 
 	sessions "github.com/kataras/go-sessions"
 )
@@ -60,11 +59,6 @@ func SessionGetUserId(session sessions.Session) int {
 // 清除用户Session
 func SessionClearUser(session sessions.Session) {
 	session.Delete(SESSION_USER)
-}
-
-// 重新设置用户Session
-func SessionUserReload(session sessions.Session) {
-	SessionSetUser(session, userf.NewUser().Get(SessionGetUserId(session)))
 }
 
 // Session设置错误

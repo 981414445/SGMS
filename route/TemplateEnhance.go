@@ -1,7 +1,6 @@
 package route
 
 import (
-	"SGMS/domain/config"
 	"SGMS/domain/util"
 	"encoding/json"
 	"fmt"
@@ -20,18 +19,6 @@ import (
 )
 
 func EhanceTemplate(tplConfig *html.Config) {
-
-	//获取版本号，给静态资源加参数，防止客户端缓存
-	tplConfig.Funcs["no_cache"] = func() string {
-		//发布版增加参数
-		if !config.IsDevMode {
-			return "?_v=" + strconv.Itoa(util.Now())
-		}
-		return ""
-	}
-	tplConfig.Funcs["PolyvUserId"] = func() string {
-		return config.PolyvUserId
-	}
 
 	tplConfig.Funcs["json"] = func(obj interface{}) (interface{}, error) {
 		b, err := json.Marshal(obj)

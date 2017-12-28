@@ -23,7 +23,6 @@ func (this *Admin) Signin(phone, password string) *admin.Admin {
 	if !id.Valid {
 		panic(&exception.CodeError{exception.USER_PASSWORD_ERROR, "密码错误"})
 	}
-	this.CheckUserDisabled(mysql, int(id.Int64))
 	u := new(admin.Admin)
 	u.User = *this.Fetch(mysql, int(id.Int64))
 	u.MenuSets, u.Menus = this.GetAdminMenu(mysql, u.Id)
