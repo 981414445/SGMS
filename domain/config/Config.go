@@ -1,47 +1,14 @@
 package config
 
-import (
-	"strconv"
-)
+// type configKV struct{ Key, Value string }
 
-// const APP_MODE_DEVELOP = "develop"
-
-var Version string
-var UserIcon1, UserIcon2, UserIcon3 string
-var AppDoamin string
-var AppPort int
-var ProxyPort int
-var IsDevMode, IsHttps bool
-var WeixinServiceAppSecret, WeixinServiceAppId, WeixinServiceToken string
-var WeixinSigninAppId, WeixinSigninAppSecret string
-var GameTimer int
-var EmailSupportSmtp, EmailSupportSsl, EmailSupportUsername, EmailSupportPassword string
-var EmailSupportPort int
-var PolyvUserId, PolyvWriteToken, PolyvReadToken, PolyvSecretkey, PolyvAppId, PolyvAppSecret string
-var LuosimaoKey string
-var Redis string
-var VerifyCodeExpire int64
-var UploadRootDir, UploadDirName string
-var WeixinPayAppId, WeixinPayAppKey, WeixinPayPayKey, WeixinPayMchId, WeixinPayNotifyUrl string
-var AlipayPrivateKey, AlipayPublicKey, AlipayAppId, AlipayPartner, AlipayNotifyUrl string
-var WsPort int
-var VideoHost string
-var AutoLoginAESKey string
-var AutoLoginMaxAge int
-var ActivityGroupSize int
-var CapacityTestTime, CapacityTestQuizCount, CapacityTestInteval int
-var EvaluationQuizCount int
-var EvaluationInterval, EvaluationFalseCo float64
-
-type configKV struct{ Key, Value string }
-
-func HttpUrl() string {
-	port := ""
-	if 80 != ProxyPort {
-		port = strconv.Itoa(ProxyPort)
-	}
-	return "http://" + AppDoamin + port
-}
+// func HttpUrl() string {
+// 	port := ""
+// 	if 80 != ProxyPort {
+// 		port = strconv.Itoa(ProxyPort)
+// 	}
+// 	return "http://" + AppDoamin + port
+// }
 
 // func init() {
 // 	Load()

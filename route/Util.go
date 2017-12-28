@@ -3,12 +3,8 @@ package route
 import (
 	"SGMS/domain/exception"
 	"SGMS/domain/face"
-	"SGMS/domain/factory/basef"
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
-	"net/url"
-	"regexp"
 	"strconv"
 	"time"
 
@@ -22,7 +18,7 @@ import (
 )
 
 const (
-	HTML_TITLE_SUFFIX = " - 爱棋道"
+	HTML_TITLE_SUFFIX = " - 学生成绩管理系统"
 )
 
 type PageData struct {
@@ -143,70 +139,6 @@ func StaticPage(app *iris.Framework, route string, tpl string, title string) {
 	})
 }
 
-func SaveImage(ctx *iris.Context, name string) string {
-	field, err := ctx.FormFile(name)
-	if nil == err && nil != field {
-		file, err := field.Open()
-		if nil != err {
-			panic(exception.NewParamError(map[string]string{name: "请添加图片！"}))
-		}
-		defer file.Close()
-		repo, err := basef.NewFileRepo().SaveImage(file, field.Filename, nil, nil)
-		if nil != err {
-			panic(exception.NewParamError(map[string]string{name: "请添加图片！"}))
-		}
-		return repo.RawImage
-	}
-	return ""
-}
-
-func FileToString(ctx *iris.Context, name string) (string, string, bool) {
-	field, err := ctx.FormFile(name)
-	if nil == err && nil != field {
-		file, err := field.Open()
-		if nil != err {
-			panic(exception.NewParamError(map[string]string{name: "文件不正确"}))
-		}
-		defer file.Close()
-		bs, err := ioutil.ReadAll(file)
-		if nil != err {
-			panic(exception.NewParamError(map[string]string{name: "文件不正确"}))
-		}
-		return field.Filename, string(bs), true
-	}
-	return "", "", false
-}
-
-type FileString struct {
-	Name, FileName, Content string
-}
-
-func FileToStrings(ctx *iris.Context) ([]FileString, bool) {
-	form, err := ctx.MultipartForm()
-	var r []FileString
-	if nil == err && nil != form {
-		for k, fs := range form.File {
-			for _, f := range fs {
-				i := FileString{Name: k, FileName: f.Filename}
-				file, err := f.Open()
-				if nil != err {
-					panic(exception.NewParamError(map[string]string{k: "文件不正确"}))
-				}
-				defer file.Close()
-				bs, err := ioutil.ReadAll(file)
-				if nil != err {
-					panic(exception.NewParamError(map[string]string{k: "文件不正确"}))
-				}
-				i.Content = string(bs)
-				r = append(r, i)
-			}
-
-		}
-		return r, true
-	}
-	return nil, false
-}
-
 // 试题加密
 func EncryptQuiz(sgf string, quizId int) string {
 	s, err := util.AESEncryptBase64(util.Md5(strconv.Itoa(quizId)), sgf)
@@ -214,20 +146,6 @@ func EncryptQuiz(sgf string, quizId int) string {
 		panic(err)
 	}
 	return s
-}
-
-// 下载棋谱
-func Download(ctx *iris.Context, name string, data []byte) {
-	fileName := url.QueryEscape(name)
-	ctx.SetHeader("Cache-Control", "max-age=0")
-	ctx.SetHeader("X-Content-Type-Options", "nosniff")
-	ctx.SetContentType("application/octet-stream")
-	if ok, _ := regexp.Match("MSIE (?:6.0|7.0|8.0)", ctx.UserAgent()); ok {
-		ctx.SetHeader("Content-Disposition", `attachment; filename="`+fileName+`"`)
-	} else {
-		ctx.SetHeader("Content-Disposition", `attachment; filename*=UTF-8''`+fileName)
-	}
-	ctx.SetBody(data)
 }
 
 // 获取IP地址
