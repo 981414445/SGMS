@@ -18,9 +18,10 @@ type User struct {
 
 type Profession struct {
 	Id        int
-	Name      int
+	Name      string
 	TeacherId int
 	Ct        int
+	No        int
 }
 
 type Course struct {

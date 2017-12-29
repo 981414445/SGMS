@@ -1,4 +1,4 @@
-package user
+package manager
 
 import (
 	"strconv"
@@ -75,7 +75,7 @@ func (this *User) Add(param face.UserAddParam) {
 	r.Phone = sql.NullString{param.Phone,true}
 	r.ProfessionId = sql.NullInt64{int64(param.ProfessionId),true}
 	r.Sex = param.Sex
-	mysql.AddTable(&r).SetKeys(true,"Id")
+	mysql.AddTable(r).SetKeys(true,"Id")
 	err := mysql.Insert(r)
 	exception.CheckMysqlError(err)
 }
