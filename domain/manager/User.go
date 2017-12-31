@@ -14,7 +14,7 @@ import (
 type User struct {
 }
 
-func (this *User) Query(param face.UserQueryParam) ([]face.UserBasic, int) {
+func (this *User) Query(param face.UserQueryParam) ([]face.UserBasic, int64) {
 	mysql := db.InitMysql()
 	defer mysql.Db.Close()
 	sql := "select * from User "
@@ -33,7 +33,7 @@ func (this *User) Query(param face.UserQueryParam) ([]face.UserBasic, int) {
 	exception.CheckMysqlError(err)
 	total, err := mysql.SelectInt(csql, param)
 	exception.CheckMysqlError(err)
-	return r, 0
+	return r, total
 }
 
 func (this *User) Get(id int) face.UserBasic {
