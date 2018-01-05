@@ -24,6 +24,7 @@ func main() {
 	app := initApp()
 	app.Static("/static", "./static", 1)
 	app.Static("/static_resources", "./static_resources", 1)
+	app.Static("/templates", "./templates", 1)
 	mainsite(app)
 	adminsite(app)
 
