@@ -45,7 +45,7 @@ type CourseUser struct {
 	Grade    sql.NullInt64
 }
 
-type ProfessionUser struct {
+type ProfessionCourse struct {
 	Id           int
 	CourseId     int
 	ProfessionId int

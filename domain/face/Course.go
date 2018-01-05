@@ -1,9 +1,28 @@
 package face
 
+import (
+	"SGMS/domain/table"
+
+	"github.com/guregu/null"
+)
+
 type CourseQueryParam struct {
 	PageParam
 	Name                                  string
 	TeacherId, Status, StartTime, EndTime int
+}
+
+type CourseDetail struct {
+	Course table.Course
+	Users  []CourseUserDetail
+}
+
+type CourseUserDetail struct {
+	PageParam
+	Uid, Sex     int
+	Name         string
+	Phone        null.String
+	ProfessionId null.Int
 }
 
 type CourseInsertParam struct {
@@ -12,6 +31,6 @@ type CourseInsertParam struct {
 }
 
 type CourseUpdateParam struct {
-	Name, Address                                    string
-	Id, TeacherId, Status, StartTime, EndTime, Limit int
+	Name, Address                            string
+	Id, TeacherId, StartTime, EndTime, Limit int
 }
