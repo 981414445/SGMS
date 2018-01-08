@@ -1,20 +1,20 @@
 package main
 
 import (
+	"SGMS/route"
 	"SGMS/route/admin"
 	"log"
 	"mime"
 	"runtime"
-	"time"
-	"gopkg.in/alecthomas/kingpin.v2"
-    "SGMS/route"
 	"strconv"
+	"time"
 
 	"github.com/kataras/go-template/html"
 	"github.com/kataras/iris"
 )
 
 const ADMIN_ROOT = "/admin001"
+
 var isDevMode bool
 
 func main() {
@@ -22,19 +22,19 @@ func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	time.LoadLocation("Local")
 	app := initApp()
+	app.Config.IsDevelopment = true
 	app.Static("/static", "./static", 1)
 	app.Static("/static_resources", "./static_resources", 1)
 	app.Static("/templates", "./templates", 1)
 	mainsite(app)
 	adminsite(app)
-
 	app.Listen(":" + strconv.Itoa(9000))
 }
 
 func mainsite(app *iris.Framework) {
 	app.Use(route.CatchException)
 	app.Use(route.UrlAccessPermission)
-	// route.Init(app)
+	route.Init(app)
 	// teacher.Init(app)
 }
 
@@ -44,12 +44,11 @@ func adminsite(app *iris.Framework) {
 	admin.Init(adminApp)
 }
 
-
 func handleArgs() {
-	dev := kingpin.Flag("dev", "app work development mode").Short('d').Bool()
+	// dev := kingpin.Flag("dev", "app work development mode").Short('d').Bool()
 	// ssl := kingpin.Flag("ssl", "app work https mode").Short('s').Bool()
-	kingpin.Parse()
-	isDevMode = *dev
+	// kingpin.Parse()
+	// isDevMode = *dev
 	// if *ssl {
 	// 	config.IsHttps = true
 	// }
@@ -66,7 +65,7 @@ func initApp() *iris.Framework {
 		log.Println("app working release mode.")
 		app.Config.IsDevelopment = false
 	}
-	
+
 	route.InitErrorPage(app)
 	tplConfig := html.DefaultConfig()
 
