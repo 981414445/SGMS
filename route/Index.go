@@ -5,24 +5,7 @@ import (
 )
 
 func Init(app *iris.Framework) {
-	RouteUser(app)
-	// RoutePublic(app)
-	// RoutePrivate(app)
-	// RouteHome(app)
-	// RouteUtil(app)
-	// RouteTraining(app)
-	// RouteUser(app)
-	// RouteCoupon(app)
-	// RouteOrder(app)
-	// RoutePaper(app)
-	// RouteArticle(app)
-	// RouteTeacher(app)
-	// routeCourse(app)
-	// RouteVideo(app)
-	// routeGame(app)
-	// RouteEvaluation(app)
-	// RouteWeixin(app)
-	// if config.IsDevMode {
-	// 	routeTest(app)
-	// }
+	RouteIndex(app)
+	RouteStudent(app)
+	RouteTeacher(app)
 }
