@@ -41,6 +41,6 @@ func Redirect(ctx *iris.Context, p string) {
 	ctx.Redirect(path.Join(ADMIN_ROOT, p), iris.StatusOK)
 }
 
-func Ok(ctx *iris.Context, data ...interface{}) {
-	Ok(ctx, data...)
-}
+// func Ok(ctx *iris.Context, data ...interface{}) {
+// 	Ok(ctx, data...)
+// }
