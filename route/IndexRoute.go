@@ -1,15 +1,12 @@
 package route
 
 import (
-	"fmt"
-
 	"github.com/kataras/iris"
 )
 
 func RouteIndex(app *iris.Framework) {
 	// 登陆
 	app.Get("/", func(ctx *iris.Context) {
-		fmt.Println("22222222222222")
 		v := NewValidatorContext(ctx)
 		data := struct {
 			Title string
