@@ -1,10 +1,15 @@
 package route
 
-import "github.com/kataras/iris"
+import (
+	"fmt"
+
+	"github.com/kataras/iris"
+)
 
 func RouteIndex(app *iris.Framework) {
 	// 登陆
 	app.Get("/", func(ctx *iris.Context) {
+		fmt.Println("22222222222222")
 		v := NewValidatorContext(ctx)
 		data := struct {
 			Title string
@@ -24,5 +29,5 @@ func RouteIndex(app *iris.Framework) {
 		data.Title = "个人信息页" + HTML_TITLE_SUFFIX
 		ctx.MustRender("entry/detail.html", data)
 	})
-	
+
 }

@@ -14,6 +14,7 @@ type User struct {
 	Password     string
 	ProfessionId sql.NullInt64
 	Sex          int
+	ProfessionNo sql.NullInt64
 }
 
 type Profession struct {

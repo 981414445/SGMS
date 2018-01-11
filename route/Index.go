@@ -8,4 +8,5 @@ func Init(app *iris.Framework) {
 	RouteIndex(app)
 	RouteStudent(app)
 	RouteTeacher(app)
+	RouteUser(app)
 }

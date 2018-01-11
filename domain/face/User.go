@@ -10,6 +10,10 @@ const (
 	USER_GROUP_ADMIN   = 99
 )
 
+type UserSigninParam struct {
+	Key, Password string
+}
+
 type User struct {
 	Id, Group int
 }

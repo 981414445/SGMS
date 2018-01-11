@@ -1,32 +1,13 @@
 package user
 
 import (
-	"SGMS/domain/db"
-	"SGMS/domain/exception"
 	"SGMS/domain/face/admin"
-	"SGMS/domain/util"
 
 	gorp "gopkg.in/gorp.v1"
 )
 
 type Admin struct {
 	User
-}
-
-func (this *Admin) Signin(phone, password string) *admin.Admin {
-	mysql := db.InitMysql()
-	defer mysql.Db.Close()
-	id, err := mysql.SelectNullInt("select id from User where `group`>=100 and phone=? and password=?", phone, util.Md5(password))
-	if nil != err {
-		panic(err)
-	}
-	if !id.Valid {
-		panic(&exception.CodeError{exception.USER_PASSWORD_ERROR, "密码错误"})
-	}
-	u := new(admin.Admin)
-	u.User = *this.Fetch(mysql, int(id.Int64))
-	u.MenuSets, u.Menus = this.GetAdminMenu(mysql, u.Id)
-	return u
 }
 
 func (this *Admin) GetAdminMenu(mysql *gorp.DbMap, uid int) ([]*admin.AdminMenuSet, []*admin.AdminMenu) {

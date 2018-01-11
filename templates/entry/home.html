@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{{template "components/head.html" .}}
+</head>
+<body>
+    {{template "components/navbar.html" .}}
+    <div class="wrapper-content">
+        {{template "components/aside.html" .}}
+        {{if eq .User.Group 99}}
+        <!-- 管理员 -->
+        <div>
+            <h1>管理员首页</h1>
+        </div>
+        <!-- <div class="content">
+            <section class="hero is-primary">
+                <div class="hero-body">
+                    <div class="container">
+                    <h1 class="title">
+                        教师中心
+                    </h1>
+                    <h2 class="subtitle">
+                        教师管理
+                    </h2>
+                    </div>
+                </div>
+            </section>
+            <table class="table is-striped is-hoverable">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>名称</th>
+                        <th>成绩</th>
+                        <th>专业</th>
+                        <th>编辑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> -->
+        {{else if eq .User.Group 0}}
+        <!-- 学生 -->
+        <div>
+            <h1>学生首页</h1>
+        </div>
+        {{else}}
+        <!-- 老师 -->
+        <div>
+            <h1>老师首页</h1>
+        </div>
+        {{end}}
+    </div>
+    <script src="/static/build/common.js"></script>
+</body>
+</html>
