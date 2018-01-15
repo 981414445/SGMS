@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{template "components/head.html" .}}
+</head>
+
+<body>
+    {{template "components/navbar.html" .}}
+    <div class="wrapper-content">
+        {{template "components/aside.html" .}}
+        <div class="content">
+            <div class="card form-detail">
+                <div class="tile" style="margin-bottom:20px;">
+                    <h1><span class="icon sidebar-icon"><i class="fa fa-list"></i></span> 课程列表</h1>
+                </div>
+                <form action="/admin/course" method="GET">
+                    <div class="columns">
+                        <div class="field column">
+                            <label class="label">教师姓名</label>
+                            <div class="control">
+                                <input name="teacher" class="input" type="text" placeholder="">
+                            </div>
+                        </div>
+                        <div class="field column">
+                            <label class="label">课程名称</label>
+                            <div class="control">
+                                <input name="course" class="input" type="text" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="field is-grouped" style="display:flex;justify-content: space-between;">
+                        <div class="control">
+                            <button class="button" type="reset">清空</button>
+                        </div>
+                        <div class="control">
+                            <button type="submit" class="button is-primary pull-right">查询</button>
+                        </div>
+                        <div class="control">
+                            <a href="#" modal="true" data-target="#course_add" class="btn btn-success pull-right button is-primary" title="创建课程">
+                                <i class="fa fa-plus"></i>
+                                创建课程
+                            </a>
+                        </div>
+                    </div>
+                </form>
+                {{template "entry/admin/courses_list.html" .}}
+            </div>
+        </div>
+    </div>
+    {{template "modal/course_add.html"}}
+    <script src="/static/build/common.js"></script>
+</body>
+
+</html>

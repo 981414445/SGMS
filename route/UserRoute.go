@@ -10,6 +10,13 @@ import (
 )
 
 func RouteUser(app *iris.Framework) {
+	app.Get("/home", func(ctx *iris.Context) {
+		data := struct {
+			PageData
+		}{}
+		data.User = SessionGetUser(ctx.Session())
+		ctx.MustRender("entry/home.html", data)
+	})
 	app.Get("/users", func(ctx *iris.Context) {
 		v := NewValidatorContext(ctx)
 		name := v.CheckQuery("name").Empty().ToString()

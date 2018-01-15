@@ -73,40 +73,7 @@
                         </div>
                     </div>
                 </form>
-                <table class="table is-striped is-hoverable admin-table">
-                    <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>名称</th>
-                            <th>成绩</th>
-                            <th>专业</th>
-                            <th>编辑</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><a href="#" data-toggle="modal" data-target="#myModal" >1</a></td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
-                    </tbody>
-                </table>
+                {{template "entry/admin/courses_list.html" .}}
             </div>
         </div>
     </div>

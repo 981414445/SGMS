@@ -1,4 +1,55 @@
+{{if eq .User.Group 99}}
 <aside class="menu sidebar">
+    <ul class="menu-list">
+            <li>
+                <a href="/home">
+                    <span class="icon sidebar-icon">
+                        <i class="fa fa-home"></i>
+                    </span>
+                    管理员首页
+                </a>
+            </li>
+        </ul>
+    <ul class="menu-list">
+        <li>
+            <a href="/admin/course">
+                <span class="icon sidebar-icon">
+                    <i class="fa fa-trophy"></i>
+                </span>
+                课程管理
+            </a>
+        </li>
+        <li>
+            <a href="/admin/major">
+                <span class="icon sidebar-icon">
+                    <i class="fa fa-file-text-o"></i>
+                </span>
+                专业管理
+            </a>
+        </li>
+        <li>
+            <a href="/users">
+                <span class="icon sidebar-icon">
+                    <i class="fa fa-file-text-o"></i>
+                </span>
+                用户管理
+            </a>
+        </li>
+    </ul>
+</aside>
+{{else if eq .User.Group 0}}
+<!-- 0是学生 -->
+<aside class="menu sidebar">
+        <ul class="menu-list">
+                <li>
+                    <a href="/teacher">
+                        <span class="icon sidebar-icon">
+                            <i class="fa fa-home"></i>
+                        </span>
+                        首页
+                    </a>
+                </li>
+            </ul>
     <p class="menu-label">
         教师管理
     </p>
@@ -56,3 +107,74 @@
         </li>
     </ul>
 </aside>
+{{else}}
+<!-- 1是老师 -->
+<aside class="menu sidebar">
+        <ul class="menu-list">
+                <li>
+                    <a href="/teacher">
+                        <span class="icon sidebar-icon">
+                            <i class="fa fa-home"></i>
+                        </span>
+                        首页
+                    </a>
+                </li>
+            </ul>
+    <p class="menu-label">
+        教师管理
+    </p>
+    <ul class="menu-list">
+        <li>
+            <a href="/teacher">
+                <span class="icon sidebar-icon">
+                    <i class="fa fa-home"></i>
+                </span>
+                首页
+            </a>
+        </li>
+        <li>
+            <a href="/teacher/course">
+                <span class="icon sidebar-icon">
+                    <i class="fa fa-trophy"></i>
+                </span>
+                课程管理
+            </a>
+        </li>
+        <li>
+            <a href="/teacher/major">
+                <span class="icon sidebar-icon">
+                    <i class="fa fa-file-text-o"></i>
+                </span>
+                专业管理
+            </a>
+        </li>
+    </ul>
+    <p class="menu-label">
+        学生管理
+    </p>
+    <ul class="menu-list">
+        <li>
+            <a href="/student">
+                <span class="icon sidebar-icon">
+                    <i class="fa fa-home"></i>
+                </span>
+                首页
+            </a>
+        </li>
+        <li>
+            <a href="/student/course">
+                <span class="icon sidebar-icon">
+                    <i class="fa fa-trophy"></i>
+                </span>课程管理
+            </a>
+        </li>
+        <li>
+            <a href="/student/major">
+                <span class="icon sidebar-icon">
+                    <i class="fa fa-file-text-o"></i>
+                </span>专业管理
+            </a>
+        </li>
+    </ul>
+</aside>
+{{end}}
