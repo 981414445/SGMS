@@ -12,15 +12,64 @@ func RouteTeacher(app *iris.Framework) {
 	// 教师首页
 	app.Get("/teacher", func(ctx *iris.Context) {
 		v := NewValidatorContext(ctx)
-
+		v.Check()
 		data := struct {
+			PageData
+			Info  face.UserBasic
 			Title string
 		}{}
-		v.Check()
+		data.User = SessionGetUser(ctx.Session())
 		data.Title = "登陆" + HTML_TITLE_SUFFIX
-		ctx.MustRender("entry/teacher.html", data)
+		data.Info = new(manager.User).Get(SessionGetUserId(ctx.Session()))
+		ctx.MustRender("entry/teacher/home.html", data)
 	})
+	// 查看教师所负责专业的所有学生信息
+	app.Get("/teacher/major/users", func(ctx *iris.Context) {
+		v := NewValidatorContext(ctx)
+		id := v.CheckQuery("id").NotEmpty().ToInt(0)
+		v.Check()
+		data := struct {
+			PageData
+			Info face.ProfessionDetail
+		}{}
+		data.User = SessionGetUser(ctx.Session())
+		data.Info = new(manager.Profession).Get(id)
+		ctx.MustRender("entry/teacher/major.html", data)
+	})
+	// 查看教师所负责的所有课程
+	app.Get("/teacher/courses", func(ctx *iris.Context) {
+		v := NewValidatorContext(ctx)
+		param := face.CourseQueryParam{}
+		param.TeacherId = v.CheckQuery("id").NotEmpty().ToInt(0)
+		v.Check()
+		data := struct {
+			PageData
+			List  []table.Course
+			Total int64
+		}{}
+		data.List, data.Total = new(manager.Course).Query(param)
+		data.User = SessionGetUser(ctx.Session())
+		ctx.MustRender("entry/teacher/courses.html", data)
+	})
+	// 查看教师所负责的某一课程及学生信息
+	app.Get("/teacher/course/detail", func(ctx *iris.Context) {
+		v := NewValidatorContext(ctx)
+		id := v.CheckQuery("id").NotEmpty().ToInt(0)
+		v.Check()
+		data := struct {
+			PageData
+			Info face.CourseDetail
+		}{}
+		data.User = SessionGetUser(ctx.Session())
+		data.Info = new(manager.Course).Get(id)
+		ctx.MustRender("entry/teacher/course_detail.html", data)
+	})
+	// 教师给学生打分
+	app.Get("/teacher/grade", func(ctx *iris.Context) {
+		v := NewValidatorContext(ctx)
 
+		v.Check()
+	})
 	// 教师课程 查询
 	app.Get("/teacher/course", func(ctx *iris.Context) {
 		v := NewValidatorContext(ctx)
@@ -45,6 +94,7 @@ func RouteTeacher(app *iris.Framework) {
 	app.Get("/teacher/major", func(ctx *iris.Context) {
 		v := NewValidatorContext(ctx)
 		data := struct {
+			PageData
 			Title string
 		}{}
 		v.Check()
