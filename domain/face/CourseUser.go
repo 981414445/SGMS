@@ -4,6 +4,10 @@ import (
 	"github.com/guregu/null"
 )
 
+type CourseUserQueryParam struct {
+	ProfessionId, Uid, Choose int
+}
+
 type CourseUserAddParam struct {
 	Uid, CourseId int
 }

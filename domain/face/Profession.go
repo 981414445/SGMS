@@ -1,6 +1,8 @@
 package face
 
 import (
+	"SGMS/domain/table"
+
 	"github.com/guregu/null"
 )
 
@@ -14,6 +16,7 @@ type ProfessionDetail struct {
 	Id, TeacherId, Ct, No                     int
 	ProfessionName, TeacherName, TeacherPhone string
 	Users                                     []ProfessionUsers
+	Courses                                   []table.Course
 }
 
 type ProfessionUsers struct {

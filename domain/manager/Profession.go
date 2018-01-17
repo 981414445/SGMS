@@ -1,12 +1,13 @@
 package manager
 
 import (
-	"gopkg.in/gorp.v1"
 	"SGMS/domain/db"
 	"SGMS/domain/exception"
 	"SGMS/domain/face"
 	"SGMS/domain/table"
 	"SGMS/domain/util"
+
+	"gopkg.in/gorp.v1"
 )
 
 type Profession struct {
@@ -41,14 +42,19 @@ func (this *Profession) Query(param face.ProfessionQueryParam) ([]table.Professi
 func (this *Profession) Get(id int) face.ProfessionDetail {
 	sql := "select p.id,p.name as ProfessionName,p.teacherId,p.no,u.name as TeacherName,u.phone as TeacherPhone from Profession p left join User u on p.teacherId = u.id where p.id = ?"
 	usql := "select id as uid,ct,name,phone,birthday from User where professionId = ?"
-	mysql:= db.InitMysql()
+	csql := "select c.* from Course c left join ProfessionCourse pc on c.id = pc.courseid where pc.professionid = ?"
+	mysql := db.InitMysql()
 	defer mysql.Db.Close()
 	r := []face.ProfessionDetail{}
-	_, err:=mysql.Select(&r,sql,id)
+	_, err := mysql.Select(&r, sql, id)
 	exception.CheckMysqlError(err)
 	if len(r) > 0 {
+		c := []table.Course{}
+		_, err := mysql.Select(&c, csql, id)
+		exception.CheckMysqlError(err)
+		r[0].Courses = c
 		u := []face.ProfessionUsers{}
-		_,err := mysql.Select(&u,usql,id)
+		_, err = mysql.Select(&u, usql, id)
 		exception.CheckMysqlError(err)
 		r[0].Users = u
 		return r[0]
@@ -72,19 +78,19 @@ func (this *Profession) Add(param face.ProfessionInsertParam) {
 func (this *Profession) Update(param face.ProfessionUpdateParam) {
 	mysql := db.InitMysql()
 	defer mysql.Db.Close()
-	r := this.fetch(mysql,param.Id)
+	r := this.fetch(mysql, param.Id)
 	r.Name = param.Name
 	r.No = param.No
 	r.TeacherId = param.TeacherId
-	mysql.AddTable(&r).SetKeys(true,"Id")
-	_,err := mysql.Update(&r)
+	mysql.AddTable(&r).SetKeys(true, "Id")
+	_, err := mysql.Update(&r)
 	exception.CheckMysqlError(err)
 }
 
-func (this *Profession) fetch(mysql *gorp.DbMap,id int) *table.Profession {
+func (this *Profession) fetch(mysql *gorp.DbMap, id int) *table.Profession {
 	r := []table.Profession{}
 	sql := "select * from Profession where id = ?"
-	_,err := mysql.Select(&r,sql,id)
+	_, err := mysql.Select(&r, sql, id)
 	exception.CheckMysqlError(err)
 	if len(r) > 0 {
 		return &r[0]
@@ -93,9 +99,9 @@ func (this *Profession) fetch(mysql *gorp.DbMap,id int) *table.Profession {
 }
 
 func (this *Profession) Del(id int) {
-	mysql:= db.InitMysql()
+	mysql := db.InitMysql()
 	defer mysql.Db.Close()
 	sql := "delete from Profession where id = ?"
-	_,err :=mysql.Exec(sql,id)
+	_, err := mysql.Exec(sql, id)
 	exception.CheckMysqlError(err)
 }

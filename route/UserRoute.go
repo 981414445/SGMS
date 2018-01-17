@@ -2,6 +2,7 @@ package route
 
 import (
 	"SGMS/domain/face"
+	"SGMS/domain/manager"
 	"SGMS/domain/table"
 	"SGMS/domain/user"
 	"fmt"
@@ -56,5 +57,56 @@ func RouteUser(app *iris.Framework) {
 	app.Get("/signout", func(ctx *iris.Context) {
 		ctx.SessionDestroy()
 		Redirect(ctx, "/")
+	})
+
+	// 学生首页
+	app.Get("/student/home", func(ctx *iris.Context) {
+		v := NewValidatorContext(ctx)
+		v.Check()
+		data := struct {
+			PageData
+			Info face.UserBasic
+		}{}
+		data.User = SessionGetUser(ctx.Session())
+		data.Info = new(manager.User).Get(SessionGetUserId(ctx.Session()))
+		ctx.MustRender("entry/student/home.html", data)
+	})
+	// 查看可选课程页面
+	app.Get("/student/course/user/choose", func(ctx *iris.Context) {
+		v := NewValidatorContext(ctx)
+		param := face.CourseUserQueryParam{}
+		param.ProfessionId = v.CheckQuery("professionid").NotEmpty().ToInt(0)
+		v.Check()
+		data := struct {
+			PageData
+			UnList []table.Course
+			List   []table.Course
+		}{}
+		data.User = SessionGetUser(ctx.Session())
+		param.Uid = SessionGetUserId(ctx.Session())
+		// choose=0查未选课程，choose>0查已选课程
+		param.Choose = 0
+		data.UnList = new(manager.CourseUser).Query(param)
+		param.Choose = 1
+		data.List = new(manager.CourseUser).Query(param)
+		ctx.MustRender("entry/student/course_choose.html", data)
+	})
+	// 学生选课
+	app.Post("/student/course/user/add", func(ctx *iris.Context) {
+		v := NewValidatorContext(ctx)
+		param := face.CourseUserAddParam{}
+		param.CourseId = v.CheckBody("courseid").NotEmpty().ToInt(0)
+		v.Check()
+		param.Uid = SessionGetUserId(ctx.Session())
+		new(manager.CourseUser).Add(param)
+		Redirect(ctx, "/student/course/user/choose")
+	})
+	// 删除选课
+	app.Get("/student/course/user/del", func(ctx *iris.Context) {
+		v := NewValidatorContext(ctx)
+		id := v.CheckQuery("id").NotEmpty().ToInt(0)
+		v.Check()
+		new(manager.CourseUser).Del(id)
+		Redirect(ctx, "/student/course/user/choose")
 	})
 }
