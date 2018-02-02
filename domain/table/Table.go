@@ -36,7 +36,7 @@ type Course struct {
 	EndTime   int
 	Limit     int
 	Signup    int
-	address   sql.NullString
+	Address   sql.NullString
 }
 
 type CourseUser struct {
