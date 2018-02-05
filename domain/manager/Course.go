@@ -114,3 +114,12 @@ func (this *Course) Del(id int) {
 	_, err := mysql.Exec(sql, id)
 	exception.CheckMysqlError(err)
 }
+
+// 修改课程人数限制
+func (this *Course) UpdateLimit(courseId, num int) {
+	mysql := db.InitMysql()
+	defer mysql.Db.Close()
+	sql := "update Course set limit = ? where id = ?"
+	_, err := mysql.Exec(sql, courseId, num)
+	exception.CheckMysqlError(err)
+}
