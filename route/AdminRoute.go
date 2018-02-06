@@ -43,10 +43,10 @@ func RouteAdmin(app *iris.Framework) {
 		v := NewValidatorContext(ctx)
 		param := face.CourseInsertParam{}
 		param.Address = v.CheckBody("address").Empty().ToString()
-		param.EndTime = v.CheckBody("endtime").NotEmpty().ToInt(0)
+		param.EndTime = v.CheckBody("endtime").NotEmpty().ToDateMin()
 		param.Limit = v.CheckBody("limit").NotEmpty().ToInt(0)
 		param.Name = v.CheckBody("name").NotEmpty().ToString()
-		param.StartTime = v.CheckBody("starttime").NotEmpty().ToInt(0)
+		param.StartTime = v.CheckBody("starttime").NotEmpty().ToDateMin()
 		param.Status = 0
 		param.TeacherId = v.CheckBody("teacherid").NotEmpty().ToInt(0)
 		v.Check()
@@ -72,14 +72,14 @@ func RouteAdmin(app *iris.Framework) {
 		param := face.CourseUpdateParam{}
 		param.Id = v.CheckBody("courseid").NotEmpty().ToInt(0)
 		param.Address = v.CheckBody("address").Empty().ToString()
-		param.EndTime = v.CheckBody("endtime").NotEmpty().ToInt(0)
 		param.Limit = v.CheckBody("limit").NotEmpty().ToInt(0)
 		param.Name = v.CheckBody("name").NotEmpty().ToString()
-		param.StartTime = v.CheckBody("starttime").NotEmpty().ToInt(0)
+		param.EndTime = v.CheckBody("endtime").NotEmpty().ToDateMin()
+		param.StartTime = v.CheckBody("starttime").NotEmpty().ToDateMin()
 		param.TeacherId = v.CheckBody("teacherid").NotEmpty().ToInt(0)
 		v.Check()
 		new(manager.Course).Update(param)
-		Redirect(ctx, "/admin/course/detail?id="+strconv.Itoa(param.Id))
+		Redirect(ctx, "/admin/course/detail?courseid="+strconv.Itoa(param.Id))
 	})
 	// 课程删除
 	app.Get("admin/course/del", func(ctx *iris.Context) {
@@ -88,6 +88,15 @@ func RouteAdmin(app *iris.Framework) {
 		v.Check()
 		new(manager.Course).Del(id)
 		Redirect(ctx, "/admin/course")
+	})
+	// 人数ajax限制
+	app.Get("json/limit/update", func(ctx *iris.Context) {
+		v := NewValidatorContext(ctx)
+		id := v.CheckQuery("id").NotEmpty().ToInt(0)
+		limit := v.CheckQuery("limit").NotEmpty().ToInt(0)
+		v.Check()
+		new(manager.Course).UpdateLimit(id, limit)
+		Ok(ctx)
 	})
 	// 专业管理
 	app.Get("/admin/major", func(ctx *iris.Context) {

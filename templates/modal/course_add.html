@@ -1,17 +1,38 @@
 <!-- Modal -->
-<div class="modal fade" id="course_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">课程添加</p>
-                <button class="delete" data-dismiss="modal" aria-label="close"></button>
-            </header>
-            <section class="modal-card-body">
-            </section>
-            <footer class="modal-card-foot">
-                <button class="button" data-dismiss="modal" >取消</button>
-                <button class="button is-success"  >保存</button>
-            </footer>
+<div class="modal" id="course_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <form action="/admin/course/add" method="POST" >
+        <div class="modal-content">
+            <h5><i class="material-icons modal-icon">add</i>课程添加</h5>
+            <div class="row">
+                <div class="input-field col s4">
+                    <input name="name" type="text" class="validate">
+                    <label for="icon_telephone">课程名称</label>
+                </div>
+                <div class="input-field col s4">
+                    <input name="address" type="text" class="validate">
+                    <label for="icon_telephone">地址</label>
+                </div>
+                <div class="input-field col s4">
+                    <input name="starttime" type="text" class="datetimepicker">
+                    <label for="icon_telephone">开始时间</label>
+                </div>
+                <div class="input-field col s4">
+                    <input name="endtime" type="text" class="datetimepicker">
+                    <label for="icon_telephone">结束时间</label>
+                </div>
+                <div class="input-field col s4">
+                    <input name="teacherid" type="text" class="validate">
+                    <label for="icon_telephone">教师id</label>
+                </div>
+                <div class="input-field col s4">
+                    <input name="limit" type="number" class="validate">
+                    <label for="icon_telephone">人数限制</label>
+                </div>
+            </div>
         </div>
-    </div>
+        <div class="modal-footer">
+            <button type="reset" class="btn-flat modal-close">取消</button>
+            <button type="submit" class="btn modal-close">保存</button>
+        </div>
+    </form>
 </div>

@@ -1,55 +1,31 @@
 {{if eq .User.Group 99}}
-<aside class="menu sidebar">
-    <ul class="menu-list">
-            <li>
-                <a href="/home">
-                    <span class="icon sidebar-icon">
-                        <i class="fa fa-home"></i>
-                    </span>
-                    管理员首页
-                </a>
-            </li>
-        </ul>
-    <ul class="menu-list">
-        <li>
-            <a href="/admin/course">
-                <span class="icon sidebar-icon">
-                    <i class="fa fa-trophy"></i>
-                </span>
-                课程管理
-            </a>
-        </li>
-        <li>
-            <a href="/admin/major">
-                <span class="icon sidebar-icon">
-                    <i class="fa fa-file-text-o"></i>
-                </span>
-                专业管理
-            </a>
-        </li>
-        <li>
-            <a href="/users">
-                <span class="icon sidebar-icon">
-                    <i class="fa fa-file-text-o"></i>
-                </span>
-                用户管理
-            </a>
-        </li>
-    </ul>
-</aside>
+<ul id="slide-out" class="side-nav fixed sidebar">
+    <li>
+        <div class="user-view">
+            <div class="background">
+                <img src="/static/images/office.jpg">
+            </div>
+            <a href="#!user"><img class="circle" src="/static/images/yuna.jpg"></a>
+            <a href="#!name"><span class="white-text name">John Doe</span></a>
+        </div>
+    </li>
+    <li><a class="waves-effect" href="/admin/course">课程管理</a></li>
+    <li><a class="waves-effect" href="/admin/major">专业管理</a></li>
+    <li><a class="waves-effect" href="/users">用户管理</a></li>
+</ul>
 {{else if eq .User.Group 0}}
 <!-- 0是学生 -->
 <aside class="menu sidebar">
-        <ul class="menu-list">
-                <li>
-                    <a href="/teacher">
+    <ul class="menu-list">
+        <li>
+            <a href="/teacher">
                         <span class="icon sidebar-icon">
                             <i class="fa fa-home"></i>
                         </span>
                         首页
                     </a>
-                </li>
-            </ul>
+        </li>
+    </ul>
     <p class="menu-label">
         教师管理
     </p>
@@ -110,16 +86,16 @@
 {{else}}
 <!-- 1是老师 -->
 <aside class="menu sidebar">
-        <ul class="menu-list">
-                <li>
-                    <a href="/teacher">
+    <ul class="menu-list">
+        <li>
+            <a href="/teacher">
                         <span class="icon sidebar-icon">
                             <i class="fa fa-home"></i>
                         </span>
                         首页
                     </a>
-                </li>
-            </ul>
+        </li>
+    </ul>
     <p class="menu-label">
         教师管理
     </p>

@@ -281,7 +281,7 @@ func Px(ctx *iris.Context, total int64, ps int, showTotal bool, siName string) s
 	}
 	pageCount := int(math.Ceil(float64(total) / float64(ps)))
 	current := si / ps
-	r := `<nav>
+	r := `<div class="pagi-wrapper" >
   <ul class="pagination pagination-warning">
     <li`
 	if !hasPreviousPage(si) {
@@ -325,7 +325,7 @@ func Px(ctx *iris.Context, total int64, ps int, showTotal bool, siName string) s
 	if showTotal {
 		r += `<span class="pagination pagination-total">共   ` + strconv.Itoa(int(total)) + `   条</span>`
 	}
-	r += `</nav>`
+	r += `</div>`
 	return r
 }
 func computePage(current int, total64 int64) []int {

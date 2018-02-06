@@ -1,42 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-{{template "components/head.html" .}}
+    {{template "components/head.html" .}}
 </head>
+
 <body>
     <div class="login-wrapper">
         <div class="box">
-            <form action="/login" >
-                <div class="field">
-                    <p class="control has-icons-left">
-                        <input class="input" type="text" name="number" placeholder="学号">
-                        <span class="icon is-small is-left">
-                        <i class="fa fa-user"></i>
-                      </span>
-                        <span class="icon is-small is-right">
-                        <i class="fa fa-check"></i>
-                      </span>
-                    </p>
-                </div>
-                <div class="field">
-                    <p class="control has-icons-left">
-                        <input class="input" type="password" name="password" placeholder="密码">
-                        <span class="icon is-small is-left">
-                        <i class="fa fa-lock"></i>
-                      </span>
-                    </p>
-                </div>
-                <div class="field">
-                    <p class="control">
-                        <button type="submit" class="button is-success submit-button">
-                        登录
-                      </button>
-                    </p>
+            <form action="/login">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">account_circle</i>
+                        <input id="icon_prefix" name="number" type="text" class="validate">
+                        <label for="icon_prefix">First Name</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">lock</i>
+                        <label for="icon_telephone">Telephone</label>
+                        <input id="icon_telephone" name="password" type="password" class="validate">
+                    </div>
+                    <div class="col s12">
+                        <button type="submit" class="btn btn-success submit-button">登录</button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
-    <script src="/static/build/login.js"></script>
+    {{template "components/script.html"}}
 </body>
 
 </html>

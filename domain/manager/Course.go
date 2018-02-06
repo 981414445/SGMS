@@ -19,7 +19,7 @@ func (this *Course) Query(param face.CourseQueryParam) ([]table.Course, int64) {
 	csql := "select count(*) from Course"
 	wsql := " where 1=1 "
 	if param.Name != "" {
-		param.Name = "%" + param.Name + "%"
+		param.Name = "'%" + param.Name + "%'"
 		wsql += " and name like " + param.Name
 	}
 	if param.TeacherId > 0 {
@@ -50,16 +50,18 @@ func (this *Course) Get(id int) face.CourseDetail {
 	mysql := db.InitMysql()
 	defer mysql.Db.Close()
 	sql := "select * from Course where id = ?"
-	r := []face.CourseDetail{}
-	_, err := mysql.Select(&r, sql, id)
+	r := face.CourseDetail{}
+	c := []table.Course{}
+	_, err := mysql.Select(&c, sql, id)
 	exception.CheckMysqlError(err)
-	if len(r) > 0 {
+	if len(c) > 0 {
 		usql := "select u.id as Uid,u.sex,u.name,u.phone,u.professionId from CourseUser cu left join User u on cu.uid = u.id where cu.courseId = ?"
 		u := []face.CourseUserDetail{}
 		_, err = mysql.Select(&u, usql, id)
 		exception.CheckMysqlError(err)
-		r[0].Users = u
-		return r[0]
+		r.Users = u
+		r.Course = c[0]
+		return r
 	}
 	return face.CourseDetail{}
 }
@@ -91,13 +93,13 @@ func (this *Course) Update(param face.CourseUpdateParam) {
 	r.Name = param.Name
 	r.StartTime = param.StartTime
 	r.TeacherId = param.TeacherId
-	mysql.AddTable(r).SetKeys(true, "Id")
-	_, err := mysql.Update(&r)
+	mysql.AddTable(*r).SetKeys(true, "Id")
+	_, err := mysql.Update(r)
 	exception.CheckMysqlError(err)
 }
 
 func (this *Course) fetch(mysql *gorp.DbMap, id int) *table.Course {
-	sql := "selectr * from Course where id = ?"
+	sql := "select * from Course where id = ?"
 	r := []table.Course{}
 	_, err := mysql.Select(&r, sql, id)
 	exception.CheckMysqlError(err)
@@ -119,7 +121,7 @@ func (this *Course) Del(id int) {
 func (this *Course) UpdateLimit(courseId, num int) {
 	mysql := db.InitMysql()
 	defer mysql.Db.Close()
-	sql := "update Course set limit = ? where id = ?"
-	_, err := mysql.Exec(sql, courseId, num)
+	sql := "update Course set `limit` = ? where id = ?"
+	_, err := mysql.Exec(sql, num, courseId)
 	exception.CheckMysqlError(err)
 }
