@@ -42,7 +42,16 @@ func RouteUser(app *iris.Framework) {
 			ssu.Id = user.Id
 			ssu.Group = user.Group
 			SessionSetUser(ctx.Session(), &ssu)
-			ctx.MustRender("entry/home.html", data)
+			if user.Group == 0 {
+				// 学生
+				ctx.MustRender("entry/home_student.html", data)
+			} else if user.Group == 1 {
+				// 老师
+				ctx.MustRender("entry/home_teacher.html", data)
+			} else {
+				// 管理员
+				ctx.MustRender("entry/home_admin.html", data)
+			}
 		} else {
 			data := struct {
 				Info  string

@@ -18,7 +18,7 @@ func (this *Profession) Query(param face.ProfessionQueryParam) ([]table.Professi
 	csql := "select count(*) from Profession "
 	wsql := " where 1=1 "
 	if param.Name != "" {
-		param.Name = "%" + param.Name + "%"
+		param.Name = "'%" + param.Name + "%'"
 		wsql += " and name like " + param.Name
 	}
 	if param.No > 0 {

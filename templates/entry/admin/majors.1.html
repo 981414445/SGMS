@@ -8,13 +8,13 @@
 <body>
     {{template "components/navbar.html" .}}
     <div class="wrapper-content">
-        {{template "components/aside_student.html" .}}
+        {{template "components/aside_admin.html" .}}
         <div class="content">
-            <div class="card form-detail">
-                <div class="tile" style="margin-bottom:20px;">
-                    <h1><span class="icon sidebar-icon"><i class="fa fa-list"></i></span> 课程列表</h1>
+            <div class="form-detail">
+                <div class="tile">
+                    <h3><span class="icon sidebar-icon"><i class="fa fa-list"></i></span> 专业列表</h3>
                 </div>
-                <form action="/course" method="POST">
+                <form action="/admin/course" method="GET" class="row">
                     <div class="columns">
                         <div class="field column">
                             <label class="label">姓名</label>
@@ -73,12 +73,46 @@
                         </div>
                     </div>
                 </form>
-                {{template "entry/admin/courses_list.html" .}}
+                <table class="table is-striped is-hoverable admin-table">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>名称</th>
+                            <th>成绩</th>
+                            <th>专业</th>
+                            <th>编辑</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="#" data-toggle="modal" data-target="#myModal" >1</a></td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
     {{template "modal/course_add.html"}}
-    <script src="/static/build/common.js"></script>
+    {{template "components/script.html"}}
+    <!-- <script src="/static/build/common.js"></script> -->
 </body>
 
 </html>

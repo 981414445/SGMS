@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{template "components/head.html" .}}
+</head>
+
+<body>
+    {{template "components/navbar.html" .}}
+    <div class="wrapper-content">
+        {{template "components/aside_admin.html" .}}
+        <div class="content">
+            <div class="form-detail">
+                <div class="tile">
+                    <h3><span class="icon sidebar-icon"><i class="fa fa-list"></i></span> 课程详情</h3>
+                </div>
+                <form action="/admin/major/update" method="POST" class="row">
+                    <input type="hidden" name="majorid" value={{.Info.Id}} >
+                    <div class="input-field col s4">
+                        <input name="name" type="text" class="validate" value="{{.Info.ProfessionName}}" >
+                        <label for="icon_prefix">专业名称</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input name="no" type="text" class="validate" value="{{.Info.No}}" >
+                        <label for="icon_telephone">专业ID</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input name="teacherid" type="number" class="validate" disabled value="{{.Info.TeacherName}}" >
+                        <label for="icon_telephone">辅导老师</label>
+                    </div>
+                    <div class="input-field col s4">
+                            <input name="phone" type="number" class="validate" disabled value="{{.Info.TeacherPhone}}" >
+                            <label for="icon_telephone">老师电话</label>
+                        </div>
+                    
+                    <div class="input-field col s12">
+                        <a class="btn blue clear">清空</a>
+                        <button class="btn pull-right" type="submit">提交</button>
+                    </div>
+                </form>
+                <div>
+                    <script>
+                        console.log({{json .Info}})
+                        </script>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{template "modal/course_add.html"}} {{template "modal/course_edit.html" .}} {{template "components/script.html"}}
+</body>
+
+</html>

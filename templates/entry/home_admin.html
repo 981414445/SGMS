@@ -6,8 +6,7 @@
 <body>
     {{template "components/navbar.html" .}}
     <div class="wrapper-content">
-        {{template "components/aside.html" .}}
-        {{if eq .User.Group 99}}
+        {{template "components/aside_admin.html" .}}
         <!-- 管理员 -->
         <div>
             <h1>管理员首页</h1>
@@ -60,18 +59,6 @@
                 </tbody>
             </table>
         </div> -->
-        {{else if eq .User.Group 0}}
-        <!-- 学生 -->
-        <div>
-            <h1>学生首页</h1>
-        </div>
-        {{else}}
-        <!-- 老师 -->
-        <div>
-            <h1>老师首页</h1>
-        </div>
-        {{end}}
-    </div>
     {{template "components/script.html"}}
 </body>
 </html>

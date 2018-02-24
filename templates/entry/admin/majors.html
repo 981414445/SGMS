@@ -8,110 +8,40 @@
 <body>
     {{template "components/navbar.html" .}}
     <div class="wrapper-content">
-        {{template "components/aside.html" .}}
+        {{template "components/aside_admin.html" .}}
         <div class="content">
-            <div class="card form-detail">
-                <div class="tile" style="margin-bottom:20px;">
-                    <h1><span class="icon sidebar-icon"><i class="fa fa-list"></i></span> 课程列表</h1>
+            <div class="form-detail">
+                <div class="tile">
+                    <h3><span class="icon sidebar-icon"><i class="fa fa-list"></i></span> 专业列表</h3>
                 </div>
-                <form action="/course" method="POST">
-                    <div class="columns">
-                        <div class="field column">
-                            <label class="label">姓名</label>
-                            <div class="control">
-                                <input name="name" class="input" type="text" placeholder="你的名字">
-                            </div>
-                        </div>
-                        <div class="field column">
-                            <label class="label">电话</label>
-                            <div class="control">
-                                <input name="phone" class="input" type="text" placeholder="电话">
-                            </div>
-                        </div>
+                <form action="/admin/major" method="GET" class="row">
+                    <div class="input-field col s3">
+                        <input name="name" type="text" class="validate">
+                        <label for="icon_prefix">专业名称</label>
                     </div>
-                    <div class="columns">
-                        <div class="field column">
-                            <label class="label">学号</label>
-                            <div class="control">
-                                <input name="id" class="input" type="text" placeholder="学号">
-                            </div>
-                        </div>
-                        <div class="field column">
-                            <label class="label">生日</label>
-                            <div class="control">
-                                <input name="birthday" class="input" type="text" placeholder="生日">
-                            </div>
-                        </div>
+                    <div class="input-field col s3">
+                        <input name="no" type="tel" class="validate">
+                        <label for="icon_telephone">专业ID</label>
                     </div>
-                    <div class="columns">
-                        <div class="field column">
-                            <label class="label">Email</label>
-                            <div class="control">
-                                <input name="email" class="input" type="text" placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="field column">
-                            <label class="label">学籍</label>
-                            <div class="control">
-                                <div class="select">
-                                    <select name="grade">
-                                        <option>一年级</option>
-                                        <option>二年级</option>
-                                        <option>三年级</option>
-                                        <option>四年级</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="input-field col s3">
+                        <input name="teacherid" type="text" class="validate">
+                        <label for="icon_prefix">教师姓名</label>
                     </div>
-                    <div class="field is-grouped" style="display:flex;justify-content: space-between;">
-                        <div class="control">
-                            <button class="button" type="reset">清空</button>
-                        </div>
-                        <div class="control">
-                            <button type="submit" class="button is-primary">保存</button>
-                        </div>
+                    <div class="input-field col s3">
+                        <button class="btn blue" type="reset">清空</button>
+                        <button class="btn" type="submit">查询</button>
+                        <a href="#major_add" class="btn waves-effect waves-light modal-trigger red" title="创建专业">
+                            创建专业
+                        </a>
                     </div>
                 </form>
-                <table class="table is-striped is-hoverable admin-table">
-                    <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>名称</th>
-                            <th>成绩</th>
-                            <th>专业</th>
-                            <th>编辑</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><a href="#" data-toggle="modal" data-target="#myModal" >1</a></td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
-                    </tbody>
-                </table>
+                {{template "entry/admin/majors_list.html" .}}
             </div>
         </div>
     </div>
-    {{template "modal/course_add.html"}}
-    <script src="/static/build/common.js"></script>
+    {{template "modal/major_add.html"}}
+    {{template "components/script.html"}}
+    <!-- <script src="/static/build/common.js"></script> -->
 </body>
 
 </html>

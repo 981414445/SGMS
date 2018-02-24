@@ -115,11 +115,13 @@ func RouteAdmin(app *iris.Framework) {
 			Total int64
 		}{}
 		data.User = SessionGetUser(ctx.Session())
+		ctx.Set("ps", param.Ps)
+		data.Ctx = ctx
 		data.List, data.Total = new(manager.Profession).Query(param)
 		if partial > 0 {
 			ctx.MustRender("entry/admin/majors_list.html", data)
 		} else {
-			ctx.MustRender("/admin/majors.html", ctx)
+			ctx.MustRender("entry/admin/majors.html", data)
 		}
 	})
 	// 专业添加
@@ -143,8 +145,9 @@ func RouteAdmin(app *iris.Framework) {
 			Info face.ProfessionDetail
 		}{}
 		data.Info = new(manager.Profession).Get(id)
+		data.Ctx = ctx
 		data.User = SessionGetUser(ctx.Session())
-		ctx.MustRender("/admin/major/detail.html", data)
+		ctx.MustRender("entry/admin/major_detail.html", data)
 	})
 	// 专业修改
 	app.Post("/admin/major/update", func(ctx *iris.Context) {

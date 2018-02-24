@@ -1,17 +1,26 @@
 <!-- Modal -->
-<div class="modal fade" id="major_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">课程添加</p>
-                <button class="delete" data-dismiss="modal" aria-label="close"></button>
-            </header>
-            <section class="modal-card-body">
-            </section>
-            <footer class="modal-card-foot">
-                <button class="button" data-dismiss="modal">取消</button>
-                <button class="button is-success">保存</button>
-            </footer>
+<div class="modal" id="major_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <form action="/admin/major/add" method="POST" >
+        <div class="modal-content">
+            <h5><i class="material-icons modal-icon">add</i>专业添加</h5>
+            <div class="row">
+                <div class="input-field col s4">
+                    <input name="name" type="text" class="validate">
+                    <label for="icon_telephone">专业名称</label>
+                </div>
+                <div class="input-field col s4">
+                    <input name="teacherid" type="text" class="validate">
+                    <label for="icon_telephone">教师名称</label>
+                </div>
+                <div class="input-field col s4">
+                    <input name="no" type="text" class="validate">
+                    <label for="icon_telephone">专业ID</label>
+                </div>
+            </div>
         </div>
-    </div>
+        <div class="modal-footer">
+            <button type="reset" class="btn-flat modal-close">取消</button>
+            <button type="submit" class="btn modal-close">保存</button>
+        </div>
+    </form>
 </div>
