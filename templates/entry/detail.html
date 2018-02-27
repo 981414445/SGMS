@@ -10,72 +10,54 @@
     <div class="wrapper-content">
         {{template "components/aside_admin.html" .}}
         <div class="content">
-            <form action="/detail/submit" method="POST" class="card form-detail">
+            <form action="admin/user/update" method="POST" class="form-detail">
+                <input type="hidden" name="id" value={{.Info.Id}} >
                 <div class="tile" style="margin-bottom:20px;">
-                    <h1> <span class="icon sidebar-icon"><i class="fa fa-user"></i></span> 个人信息</h1>
+                    <h3> <span class="icon sidebar-icon"><i class="fa fa-user"></i></span> 个人信息</h3>
                 </div>
                 <div class="columns">
                     <div class="field column">
-                        <label class="label">姓名</label>
+                        <label for="icon_telephone">姓名</label>
                         <div class="control">
-                            <input name="name" class="input" type="text" placeholder="你的名字">
+                            <input name="name" class="validate" type="text" value="{{.Info.Name}}">
                         </div>
                     </div>
                     <div class="field column">
-                        <label class="label">电话</label>
+                        <label for="icon_telephone">电话</label>
                         <div class="control">
-                            <input name="phone" class="input" type="text" placeholder="电话">
-                        </div>
-                    </div>
-                </div>
-                <div class="columns">
-                    <div class="field column">
-                        <label class="label">学号</label>
-                        <div class="control">
-                            <input name="id" class="input" type="text" placeholder="学号">
-                        </div>
-                    </div>
-                    <div class="field column">
-                        <label class="label">生日</label>
-                        <div class="control">
-                            <input name="birthday" class="input" type="text" placeholder="生日">
+                            <input name="phone" class="validate" type="text" value="{{.Info.Phone.String}}">
                         </div>
                     </div>
                 </div>
                 <div class="columns">
                     <div class="field column">
-                        <label class="label">Email</label>
+                        <label for="icon_telephone">生日</label>
                         <div class="control">
-                            <input name="email" class="input" type="text" placeholder="Email">
-                        </div>
-                    </div>
-                    <div class="field column">
-                        <label class="label">学籍</label>
-                        <div class="control">
-                            <div class="select">
-                                <select name="grade">
-                                    <option>一年级</option>
-                                    <option>二年级</option>
-                                    <option>三年级</option>
-                                    <option>四年级</option>
-                                </select>
-                            </div>
+                            <input name="birthday" class="validate" type="text" value="{{datetime .Info.Birthday.Int64}}">
                         </div>
                     </div>
                 </div>
-                <div class="field">
-                    <label class="label">自我简介</label>
-                    <div class="control">
-                        <textarea name="intro" class="textarea" placeholder="Textarea"></textarea>
+                <div class="columns">
+                    <div class="field column">
+                        <label for="icon_telephone">性别</label>
+                        <div class="control">
+                            <input name="sex" class="validate" type="text" value="{{.Info.Sex}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="field column">
+                        <label for="icon_telephone">密码</label>
+                        <div class="control">
+                            <input name="password" class="validate" type="text" placeholder="不修改密码则不必填写">
+                        </div>
                     </div>
                 </div>
                 <div class="field is-grouped" style="display:flex;justify-content: space-between;">
-                    <div class="control">
-                        <button class="button" type="reset">清空</button>
-                    </div>
-                    <div class="control">
-                        <button type="submit" class="button is-primary">保存</button>
-                    </div>
+                        <div class="input-field col s3">
+                            <button class="btn blue" type="reset">清空</button>
+                            <button class="btn" type="submit">保存</button>
+                        </div>
                 </div>
             </form>
         </div>

@@ -1,6 +1,11 @@
 package route
 
-import "github.com/kataras/iris"
+import (
+	"SGMS/domain/face"
+	"SGMS/domain/manager"
+
+	"github.com/kataras/iris"
+)
 
 func RouteStudent(app *iris.Framework) {
 	// 教师首页
@@ -33,5 +38,21 @@ func RouteStudent(app *iris.Framework) {
 		v.Check()
 		data.Title = "个人信息页" + HTML_TITLE_SUFFIX
 		ctx.MustRender("entry/majors.html", data)
+	})
+	// 用户信息设置
+	app.Get("/user/detail", func(ctx *iris.Context) {
+		v := NewValidatorContext(ctx)
+		id := v.CheckQuery("id").NotEmpty().ToInt(0)
+		v.Check()
+		data := struct {
+			PageData
+			Info  face.UserBasic
+			Title string
+		}{}
+		data.User = SessionGetUser(ctx.Session())
+		data.Ctx = ctx
+		data.Info = new(manager.User).Get(id)
+		data.Title = "个人信息页" + HTML_TITLE_SUFFIX
+		ctx.MustRender("entry/detail.html", data)
 	})
 }

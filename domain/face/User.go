@@ -27,7 +27,8 @@ type UserQueryParam struct {
 type UserBasic struct {
 	Id, Ct, Group, Sex int
 	Name, Password     string
-	Phone, Birthday    null.String
+	Phone              null.String
+	Birthday           null.Int
 	ProfessionId       null.Int
 	ProfessionNo       null.Int
 }
