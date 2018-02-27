@@ -1,0 +1,60 @@
+<!-- <div class="admin-list">
+    <table class="table striped">
+        <h4>专业可选课程</h4>
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>课程名称</th>
+                <th>老师姓名</th>
+                <th>创建时间</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th>人数限制</th>
+                <th>报名人数</th>
+                <th>上课地点</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range $i,$e := .Info.Courses}}
+            <tr>
+                <td>{{add $i 1}}</td>
+                <td>{{$e.Name}}</td>
+                <td>{{$e.TeacherId}}</td>
+                <td>{{$e.Ct}}</td>
+                <td>{{$e.StartTime}}</td>
+                <td>{{$e.EndTime}}</td>
+                <td>{{$e.Limit}}</td>
+                <td>{{$e.Signup}}</td>
+                <td>{{$e.Address.String}}</td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+    
+</div> -->
+<div class="admin-list">
+    <table class="table striped">
+        <h4>专业学生</h4>
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>学生姓名</th>
+                <th>学号</th>
+                <th>电话</th>
+                <th>性别</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range $i,$e := .Info.Users}}
+            <tr>
+                <td>{{add $i 1}}</td>
+                <td>{{$e.Name}}</td>
+                <td>{{$e.No}}</td>
+                <td>{{$e.Phone.String}}</td>
+                <td>{{if eq $e.Sex 0}}男{{else}}女{{end}}</td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+    
+</div>

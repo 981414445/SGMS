@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{template "components/head.html" .}}
+</head>
+
+<body>
+    {{template "components/navbar.html" .}}
+    <div class="wrapper-content">
+        {{template "components/aside_admin.html" .}}
+        <div class="content">
+            <div class="form-detail">
+                <div class="tile">
+                    <h3><span class="icon sidebar-icon"><i class="fa fa-list"></i></span> 用户列表</h3>
+                </div>
+                <form action="/admin/users" method="GET" class="row">
+                    <div class="input-field col s3">
+                        <input name="name" type="text" class="validate">
+                        <label for="icon_prefix">学生姓名</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input name="no" type="tel" class="validate">
+                        <label for="icon_telephone">学号</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input name="professionname" type="text" class="validate">
+                        <label for="icon_prefix">专业名称</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input name="professionno" type="text" class="validate">
+                        <label for="icon_prefix">专业编号</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <button class="btn blue" type="reset">清空</button>
+                        <button class="btn" type="submit">查询</button>
+                    </div>
+                </form>
+                {{template "entry/admin/user_list.html" .}}
+            </div>
+        </div>
+    </div>
+    {{template "components/script.html"}}
+    <!-- <script src="/static/build/common.js"></script> -->
+</body>
+
+</html>

@@ -185,19 +185,20 @@ func RouteAdmin(app *iris.Framework) {
 			Total int64
 		}{}
 		data.List, data.Total = new(manager.User).Query(param)
+		data.Ctx = ctx
 		data.User = SessionGetUser(ctx.Session())
 		if partial > 0 {
-			ctx.MustRender("/admin/users_list.html", data)
+			ctx.MustRender("entry/admin/users_list.html", data)
 		} else {
-			ctx.MustRender("/admin/users.html", data)
+			ctx.MustRender("entry/admin/users.html", data)
 		}
 	})
 	// 用户添加
 	app.Post("/admin/user/add", func(ctx *iris.Context) {
 		v := NewValidatorContext(ctx)
 		param := face.UserAddParam{}
-		birthday := v.CheckBody("birthday").Empty().ToString()
-		param.Birthday.String = birthday
+		birthday := v.CheckBody("birthday").Empty().ToInt(0)
+		param.Birthday.Int64 = int64(birthday)
 		param.Group = v.CheckBody("group").NotEmpty().ToInt(0)
 		param.Name = v.CheckBody("name").NotEmpty().ToString()
 		param.Phone = v.CheckBody("phone").NotEmpty().ToString()
@@ -218,16 +219,16 @@ func RouteAdmin(app *iris.Framework) {
 		}{}
 		data.Info = new(manager.User).Get(id)
 		data.User = SessionGetUser(ctx.Session())
-		ctx.MustRender("admin/user/detail.html", ctx)
+		ctx.MustRender("entry/admin/user_detail.html", data)
 	})
 	// 用户修改
 	app.Post("/admin/user/update", func(ctx *iris.Context) {
 		v := NewValidatorContext(ctx)
 		param := face.UserUpdateParam{}
 		param.Id = v.CheckBody("id").NotEmpty().ToInt(0)
-		param.Birthday.String = v.CheckBody("birthday").Empty().ToString()
+		param.Birthday.Int64 = int64(v.CheckBody("birthday").Empty().ToInt(0))
 		param.Name = v.CheckBody("name").NotEmpty().ToString()
-		param.Password = v.CheckBody("password").NotEmpty().ToString()
+		param.Password = v.CheckBody("password").Empty().ToString()
 		param.Phone = v.CheckBody("phone").Empty().ToString()
 		param.ProfessionId = v.CheckBody("professionid").NotEmpty().ToInt(0)
 		param.Sex = v.CheckBody("sex").Empty().ToInt(0)

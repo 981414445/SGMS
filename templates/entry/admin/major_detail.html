@@ -12,7 +12,7 @@
         <div class="content">
             <div class="form-detail">
                 <div class="tile">
-                    <h3><span class="icon sidebar-icon"><i class="fa fa-list"></i></span> 课程详情</h3>
+                    <h3><span class="icon sidebar-icon"><i class="fa fa-list"></i></span> 专业详情</h3>
                 </div>
                 <form action="/admin/major/update" method="POST" class="row">
                     <input type="hidden" name="majorid" value={{.Info.Id}} >
@@ -25,7 +25,7 @@
                         <label for="icon_telephone">专业ID</label>
                     </div>
                     <div class="input-field col s4">
-                        <input name="teacherid" type="number" class="validate" disabled value="{{.Info.TeacherName}}" >
+                        <input name="teacherid" type="number" class="validate" value="{{.Info.TeacherName}}" >
                         <label for="icon_telephone">辅导老师</label>
                     </div>
                     <div class="input-field col s4">
@@ -38,10 +38,11 @@
                         <button class="btn pull-right" type="submit">提交</button>
                     </div>
                 </form>
+                {{template "entry/admin/major_detail_course.html" .}}
                 <div>
                     <script>
                         console.log({{json .Info}})
-                        </script>
+                    </script>
                 </div>
             </div>
         </div>

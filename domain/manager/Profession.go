@@ -41,7 +41,7 @@ func (this *Profession) Query(param face.ProfessionQueryParam) ([]table.Professi
 
 func (this *Profession) Get(id int) face.ProfessionDetail {
 	sql := "select p.id,p.name as ProfessionName,p.teacherId,p.no,u.name as TeacherName,u.phone as TeacherPhone from Profession p left join User u on p.teacherId = u.id where p.id = ?"
-	usql := "select id as uid,ct,name,phone,birthday from User where professionId = ?"
+	usql := "select id as uid,ct,name,phone,birthday,sex,professionNo as No from User where professionId = ?"
 	csql := "select c.* from Course c left join ProfessionCourse pc on c.id = pc.courseid where pc.professionid = ?"
 	mysql := db.InitMysql()
 	defer mysql.Db.Close()

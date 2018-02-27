@@ -21,6 +21,7 @@ type User struct {
 type UserQueryParam struct {
 	PageParam
 	Id, ProfessionId int
+	Name             string
 }
 
 type UserBasic struct {
@@ -28,16 +29,17 @@ type UserBasic struct {
 	Name, Password     string
 	Phone, Birthday    null.String
 	ProfessionId       null.Int
+	ProfessionNo       null.Int
 }
 
 type UserUpdateParam struct {
 	Id, Group, ProfessionId, Sex int
 	Name, Phone, Password        string
-	Birthday                     null.String
+	Birthday                     null.Int
 }
 
 type UserAddParam struct {
 	Name, Phone              string
 	Group, ProfessionId, Sex int
-	Birthday                 null.String
+	Birthday                 null.Int
 }

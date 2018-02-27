@@ -10,12 +10,11 @@ type User struct {
 	Phone        sql.NullString
 	Ct           int
 	Group        int
-	Birthday     sql.NullString
+	Birthday     sql.NullInt64
 	Password     string
 	ProfessionId sql.NullInt64
 	Sex          int
 	ProfessionNo sql.NullInt64
-	No           sql.NullInt64
 }
 
 type Profession struct {

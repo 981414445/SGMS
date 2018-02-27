@@ -20,9 +20,9 @@ type ProfessionDetail struct {
 }
 
 type ProfessionUsers struct {
-	Uid, Ct         int
-	Name            string
-	Phone, Birthday null.String
+	Uid, Ct, No, Sex int
+	Name             string
+	Phone, Birthday  null.String
 }
 
 type ProfessionInsertParam struct {

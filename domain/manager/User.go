@@ -1,14 +1,15 @@
 package manager
 
 import (
-	"strconv"
-	"SGMS/domain/util"
-	"database/sql"
-	"SGMS/domain/table"
-	"gopkg.in/gorp.v1"
 	"SGMS/domain/db"
 	"SGMS/domain/exception"
 	"SGMS/domain/face"
+	"SGMS/domain/table"
+	"SGMS/domain/util"
+	"database/sql"
+	"strconv"
+
+	"gopkg.in/gorp.v1"
 )
 
 type User struct {
@@ -20,6 +21,10 @@ func (this *User) Query(param face.UserQueryParam) ([]face.UserBasic, int64) {
 	sql := "select * from User "
 	csql := "select count(*) from User"
 	wsql := " where 1=1 "
+	if param.Name != "" {
+		param.Name = "'%" + param.Name + "%'"
+		wsql += " and name like :Name "
+	}
 	if param.Id > 0 {
 		wsql += " and id = :Id "
 	}
@@ -52,46 +57,46 @@ func (this *User) Get(id int) face.UserBasic {
 func (this *User) Update(param face.UserUpdateParam) {
 	mysql := db.InitMysql()
 	defer mysql.Db.Close()
-	r := this.fetch(mysql,param.Id)
+	r := this.fetch(mysql, param.Id)
 	r.Name = param.Name
-	r.Birthday = sql.NullString{param.Birthday.String,true}
+	r.Birthday = sql.NullInt64{param.Birthday.Int64, true}
 	r.Password = param.Password
-	r.Phone = sql.NullString{param.Phone,true}
-	r.ProfessionId = sql.NullInt64{int64(param.ProfessionId),true}
+	r.Phone = sql.NullString{param.Phone, true}
+	r.ProfessionId = sql.NullInt64{int64(param.ProfessionId), true}
 	r.Sex = param.Sex
-	mysql.AddTable(r).SetKeys(true,"Id")
-	_,err := mysql.Update(&r)
+	mysql.AddTable(*r).SetKeys(true, "Id")
+	_, err := mysql.Update(r)
 	exception.CheckMysqlError(err)
 }
 
 func (this *User) Add(param face.UserAddParam) {
-	mysql:=db.InitMysql()
+	mysql := db.InitMysql()
 	defer mysql.Db.Close()
 	r := table.User{}
 	r.Name = param.Name
-	r.Birthday = sql.NullString{param.Birthday.String,true}
+	r.Birthday = sql.NullInt64{param.Birthday.Int64, true}
 	r.Group = param.Group
 	r.Password = util.Md5(strconv.Itoa(111111))
-	r.Phone = sql.NullString{param.Phone,true}
-	r.ProfessionId = sql.NullInt64{int64(param.ProfessionId),true}
+	r.Phone = sql.NullString{param.Phone, true}
+	r.ProfessionId = sql.NullInt64{int64(param.ProfessionId), true}
 	r.Sex = param.Sex
-	mysql.AddTable(r).SetKeys(true,"Id")
+	mysql.AddTable(r).SetKeys(true, "Id")
 	err := mysql.Insert(r)
 	exception.CheckMysqlError(err)
 }
 
 func (this *User) Del(id int) {
 	sql := "delete from User where id = ?"
-	mysql:= db.InitMysql()
+	mysql := db.InitMysql()
 	defer mysql.Db.Close()
-	_,err := mysql.Exec(sql,id)
+	_, err := mysql.Exec(sql, id)
 	exception.CheckMysqlError(err)
 }
 
-func (this *User) fetch(mysql *gorp.DbMap,id int) *table.User{
+func (this *User) fetch(mysql *gorp.DbMap, id int) *table.User {
 	sql := "select * from User where id = ?"
 	r := []table.User{}
-	_,err := mysql.Select(&r,sql,id)
+	_, err := mysql.Select(&r, sql, id)
 	exception.CheckMysqlError(err)
 	if len(r) > 0 {
 		return &r[0]
