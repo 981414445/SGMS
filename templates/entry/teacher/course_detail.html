@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{template "components/head.html" .}}
+</head>
+
+<body>
+    {{template "components/navbar.html" .}}
+    <div class="wrapper-content">
+        {{template "components/aside_teacher.html" .}}
+        <div class="content">
+            <div class="form-detail">
+                <div class="tile">
+                    <h3><span class="icon sidebar-icon"><i class="fa fa-list"></i></span> 课程详情</h3>
+                </div>
+                <form action="/admin/course/update" method="POST" class="row">
+                    <input type="hidden" name="courseid" value={{.Info.Course.Id}} >
+                    <div class="input-field col s4">
+                        <input name="teacherid" type="text" class="validate" value="{{.Info.Course.TeacherId}}" >
+                        <label for="icon_prefix">教师姓名</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input name="name" type="text" class="validate" value="{{.Info.Course.Name}}" >
+                        <label for="icon_telephone">课程名称</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input name="address" type="number" class="validate" disabled value="{{.Info.Course.Signup}}" >
+                        <label for="icon_telephone">报名数</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input name="limit" type="number" class="validate" value="{{.Info.Course.Limit}}" >
+                        <label for="icon_telephone">人数限制</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input name="starttime" type="text" class="datetimepicker" value="{{datetime .Info.Course.StartTime}}" >
+                        <label for="icon_telephone">开始时间</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input name="endtime" type="text" class="datetimepicker" value="{{datetime .Info.Course.EndTime}}" >
+                        <label for="icon_telephone">结束时间</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <a class="btn blue clear">清空</a>
+                        <button class="btn pull-right" type="submit">提交</button>
+                    </div>
+                </form>
+                {{template "entry/teacher/course_detail_user_list.html" .}}
+            </div>
+        </div>
+    </div>
+    {{template "components/script.html"}}
+</body>
+
+</html>

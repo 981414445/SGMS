@@ -23,6 +23,7 @@ type CourseUserDetail struct {
 	Name         string
 	Phone        null.String
 	ProfessionId null.Int
+	ProfessionNo null.Int
 }
 
 type CourseInsertParam struct {

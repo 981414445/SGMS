@@ -12,7 +12,7 @@
         <div class="content">
             <div class="form-detail">
                 <div class="tile">
-                    <h3><span class="icon sidebar-icon"><i class="fa fa-list"></i></span> 课程详情</h3>
+                    <h3><span class="icon sidebar-icon"><i class="fa fa-list"></i></span> 用户详情</h3>
                 </div>
                 <form action="/admin/user/update" method="POST" class="row">
                     <input type="hidden" name="id" value={{.Info.Id}} >
@@ -29,11 +29,11 @@
                         <label for="icon_telephone">性别</label>
                     </div>
                     <div class="input-field col s3">
-                        <input name="phone" type="number" class="validate" value="{{.Info.Phone}}" >
+                        <input name="phone" type="number" class="validate" value="{{.Info.Phone.String}}" >
                         <label for="icon_telephone">电话</label>
                     </div>
                     <div class="input-field col s3">
-                        <input name="birthday" type="text" class="datetimepicker" disabled value="{{datetime .Info.Birthday}}" >
+                        <input name="birthday" type="text" class="datetimepicker" disabled value="{{datetime .Info.Birthday.Int64}}" >
                         <label for="icon_telephone">生日</label>
                     </div>
                     <div class="input-field col s3">

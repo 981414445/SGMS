@@ -20,6 +20,7 @@ func RouteTeacher(app *iris.Framework) {
 		}{}
 		data.User = SessionGetUser(ctx.Session())
 		data.Title = "登陆" + HTML_TITLE_SUFFIX
+		data.Ctx = ctx
 		data.Info = new(manager.User).Get(SessionGetUserId(ctx.Session()))
 		ctx.MustRender("entry/teacher/home.html", data)
 	})
@@ -48,6 +49,7 @@ func RouteTeacher(app *iris.Framework) {
 			Total int64
 		}{}
 		data.List, data.Total = new(manager.Course).Query(param)
+		data.Ctx = ctx
 		data.User = SessionGetUser(ctx.Session())
 		ctx.MustRender("entry/teacher/courses.html", data)
 	})
