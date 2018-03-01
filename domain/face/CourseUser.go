@@ -14,5 +14,5 @@ type CourseUserAddParam struct {
 
 type CourseUserUpdateParam struct {
 	Id    int
-	Grade null.Int
+	Score null.Int
 }

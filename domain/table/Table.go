@@ -43,7 +43,7 @@ type CourseUser struct {
 	Uid      int
 	CourseId int
 	Ct       int
-	Grade    sql.NullInt64
+	Score    sql.NullInt64
 }
 
 type ProfessionCourse struct {

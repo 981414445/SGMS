@@ -19,11 +19,13 @@ type CourseDetail struct {
 
 type CourseUserDetail struct {
 	PageParam
+	CUId         int
 	Uid, Sex     int
 	Name         string
 	Phone        null.String
 	ProfessionId null.Int
 	ProfessionNo null.Int
+	Score        null.Int
 }
 
 type CourseInsertParam struct {

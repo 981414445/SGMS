@@ -105,3 +105,12 @@ func (this *Profession) Del(id int) {
 	_, err := mysql.Exec(sql, id)
 	exception.CheckMysqlError(err)
 }
+
+type ProfessionUser struct {
+	ProfessionName string
+	ProfessionNo   int64
+	Users          []face.UserBasic
+}
+
+// 老师专业列表
+// 专业详情(学生信息)

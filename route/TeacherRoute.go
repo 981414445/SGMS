@@ -4,7 +4,9 @@ import (
 	"SGMS/domain/face"
 	"SGMS/domain/manager"
 	"SGMS/domain/table"
+	"database/sql"
 
+	"github.com/guregu/null"
 	"github.com/kataras/iris"
 )
 
@@ -67,10 +69,14 @@ func RouteTeacher(app *iris.Framework) {
 		ctx.MustRender("entry/teacher/course_detail.html", data)
 	})
 	// 教师给学生打分
-	app.Get("/teacher/grade", func(ctx *iris.Context) {
+	app.Get("/json/teacher/score/update", func(ctx *iris.Context) {
 		v := NewValidatorContext(ctx)
-
+		param := face.CourseUserUpdateParam{}
+		param.Id = v.CheckQuery("id").NotEmpty().ToInt(0)
+		param.Score = null.Int{sql.NullInt64{int64(v.CheckQuery("score").NotEmpty().ToInt(0)), true}}
 		v.Check()
+		new(manager.CourseUser).Update(param)
+		Ok(ctx)
 	})
 	// 教师课程 查询
 	app.Get("/teacher/course", func(ctx *iris.Context) {
@@ -95,12 +101,15 @@ func RouteTeacher(app *iris.Framework) {
 	// 教师专业
 	app.Get("/teacher/major", func(ctx *iris.Context) {
 		v := NewValidatorContext(ctx)
+
+		v.Check()
 		data := struct {
 			PageData
 			Title string
 		}{}
-		v.Check()
+		data.User = SessionGetUser(ctx.Session())
+		data.Ctx = ctx
 		data.Title = "个人信息页" + HTML_TITLE_SUFFIX
-		ctx.MustRender("entry/majors.html", data)
+		ctx.MustRender("entry/teacher/majors.html", data)
 	})
 }

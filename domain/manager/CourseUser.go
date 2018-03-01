@@ -6,7 +6,6 @@ import (
 	"SGMS/domain/face"
 	"SGMS/domain/table"
 	"SGMS/domain/util"
-	"database/sql"
 
 	"gopkg.in/gorp.v1"
 )
@@ -44,9 +43,11 @@ func (this *CourseUser) Add(param face.CourseUserAddParam) {
 func (this *CourseUser) Update(param face.CourseUserUpdateParam) {
 	mysql := db.InitMysql()
 	defer mysql.Db.Close()
-	r := this.fetch(mysql, param.Id)
-	r.Grade = sql.NullInt64{param.Grade.Int64, true}
-	_, err := mysql.Update(&r)
+	// r := this.fetch(mysql, param.Id)
+	// r.Score = sql.NullInt64{param.Score.Int64, true}
+	// _, err := mysql.Update(&r)
+	sql := "update CourseUser set score = ? where id = ?"
+	_, err := mysql.Exec(sql, param.Score.Int64, param.Id)
 	exception.CheckMysqlError(err)
 }
 

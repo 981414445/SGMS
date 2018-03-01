@@ -8,6 +8,7 @@
                     <th>性别</th>
                     <th>电话</th>
                     <th>专业</th>
+                    <th>得分</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +20,7 @@
                     <td>{{$e.Sex}}</td>
                     <td>{{$e.Phone.String}}</td>
                     <td>{{$e.ProfessionId.Int64}}</td>
+                    <td><span class="edit-area" contenteditable data-id={{$e.CUId}} data-name="score" route="/json/teacher/score/update">{{if $e.Score.Int64}}{{$e.Score.Int64}}{{end}}</span></td>
                 </tr>
                 {{end}}
             </tbody>

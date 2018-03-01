@@ -55,7 +55,7 @@ func (this *Course) Get(id int) face.CourseDetail {
 	_, err := mysql.Select(&c, sql, id)
 	exception.CheckMysqlError(err)
 	if len(c) > 0 {
-		usql := "select u.id as Uid,u.sex,u.name,u.phone,u.professionId,u.professionNo from CourseUser cu left join User u on cu.uid = u.id where cu.courseId = ?"
+		usql := "select cu.id as CUId,u.id as Uid,u.sex,u.name,u.phone,u.professionId,u.professionNo,cu.score from CourseUser cu left join User u on cu.uid = u.id where cu.courseId = ?"
 		u := []face.CourseUserDetail{}
 		_, err = mysql.Select(&u, usql, id)
 		exception.CheckMysqlError(err)
