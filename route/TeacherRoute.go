@@ -30,14 +30,18 @@ func RouteTeacher(app *iris.Framework) {
 	app.Get("/teacher/major/users", func(ctx *iris.Context) {
 		v := NewValidatorContext(ctx)
 		id := v.CheckQuery("id").NotEmpty().ToInt(0)
+		name := v.CheckQuery("name").Empty().ToString()
+		no := v.CheckQuery("no").Empty().ToInt(0)
 		v.Check()
 		data := struct {
 			PageData
-			Info face.ProfessionDetail
+			Info  manager.ProfessionUser
+			Total int64
 		}{}
+		data.Ctx = ctx
 		data.User = SessionGetUser(ctx.Session())
-		data.Info = new(manager.Profession).Get(id)
-		ctx.MustRender("entry/teacher/major.html", data)
+		data.Info, data.Total = new(manager.Profession).QueryProfessionUser(id, no, name)
+		ctx.MustRender("entry/teacher/users.html", data)
 	})
 	// 查看教师所负责的所有课程
 	app.Get("/teacher/courses", func(ctx *iris.Context) {
@@ -106,10 +110,13 @@ func RouteTeacher(app *iris.Framework) {
 		data := struct {
 			PageData
 			Title string
+			List  []manager.TeacherProfession
+			Total int64
 		}{}
 		data.User = SessionGetUser(ctx.Session())
 		data.Ctx = ctx
-		data.Title = "个人信息页" + HTML_TITLE_SUFFIX
+		data.Title = "专业管理" + HTML_TITLE_SUFFIX
+		data.List, data.Total = new(manager.Profession).GetTeacherProfession(data.User.Id)
 		ctx.MustRender("entry/teacher/majors.html", data)
 	})
 }

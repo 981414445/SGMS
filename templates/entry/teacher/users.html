@@ -12,30 +12,27 @@
         <div class="content">
             <div class="form-detail">
                 <div class="tile">
-                    <h3><span class="icon sidebar-icon"><i class="fa fa-list"></i></span> 专业列表</h3>
+                    <h3><span class="icon sidebar-icon"><i class="fa fa-list"></i></span> {{.Info.Info.ProfessionName}}学生列表</h3>
                 </div>
-                <!-- <form action="/teacher/course" method="GET" class="row">
+                <form action="/teacher/major/users" method="GET" class="row">
+                    <input type="hidden" name="id" value={{.Info.Info.ProfessionId}} >
                     <div class="input-field col s3">
                         <input name="name" type="text" class="validate">
-                        <label for="icon_prefix">专业名称</label>
+                        <label for="icon_prefix">学生姓名</label>
                     </div>
                     <div class="input-field col s3">
                         <input name="no" type="tel" class="validate">
-                        <label for="icon_telephone">专业ID</label>
+                        <label for="icon_telephone">学号</label>
                     </div>
                     <div class="input-field col s3">
                         <button class="btn blue" type="reset">清空</button>
                         <button class="btn" type="submit">查询</button>
-                        <a href="#major_add" class="btn waves-effect waves-light modal-trigger red" title="创建专业">
-                            创建专业
-                        </a>
                     </div>
-                </form> -->
-                {{template "entry/teacher/majors_list.html" .}}
+                </form>
+                {{template "entry/teacher/user_list.html" .}}
             </div>
         </div>
     </div>
-    {{template "modal/major_add.html"}}
     {{template "components/script.html"}}
     <!-- <script src="/static/build/common.js"></script> -->
 </body>

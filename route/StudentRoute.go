@@ -3,6 +3,7 @@ package route
 import (
 	"SGMS/domain/face"
 	"SGMS/domain/manager"
+	"SGMS/domain/table"
 
 	"github.com/kataras/iris"
 )
@@ -19,15 +20,25 @@ func RouteStudent(app *iris.Framework) {
 		ctx.MustRender("entry/student.html", data)
 	})
 
-	// 教师课程
+	// 学生课程管理
 	app.Get("/student/course", func(ctx *iris.Context) {
 		v := NewValidatorContext(ctx)
+		param := face.CourseQueryParam{}
+		param.Name = v.CheckQuery("name").Empty().ToString()
+		param.TeacherId = v.CheckQuery("teacherid").Empty().ToInt(0)
+		v.Check()
 		data := struct {
+			PageData
 			Title string
+			List  []table.Course
+			Total int64
 		}{}
 		v.Check()
+		data.Ctx = ctx
 		data.Title = "个人信息页" + HTML_TITLE_SUFFIX
-		ctx.MustRender("entry/courses.html", data)
+		data.List, data.Total = new(manager.Course).Query(param)
+
+		ctx.MustRender("entry/student/courses.html", data)
 	})
 	// 教师专业
 	app.Get("/student/major", func(ctx *iris.Context) {

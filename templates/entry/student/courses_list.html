@@ -1,36 +1,30 @@
 <div class="admin-list">
-<table class="table is-striped is-hoverable admin-table">
+    <table class="table striped">
         <thead>
             <tr>
                 <th>序号</th>
-                <th>名称</th>
-                <th>成绩</th>
-                <th>专业</th>
-                <th>编辑</th>
+                <th>课程名称</th>
+                <th>人数限制</th>
+                <th>课程状态</th>
+                <th>上课老师</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th>删除</th>
             </tr>
         </thead>
         <tbody>
+            {{range $i,$e := .List}}
             <tr>
-                <td><a href="#" data-toggle="modal" data-target="#myModal" >1</a></td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
+                <td>{{add $i 1}}</td>
+                <td><a href="/admin/course/detail?courseid={{$e.Id}}">{{$e.Name}}</a></td>
+                <td><span class="edit-area" contenteditable data-id={{$e.Id}} data-name="limit" route="/json/limit/update" >{{$e.Limit}}</span></td>
+                <td>{{$e.Status}}</td>
+                <td>{{$e.TeacherId}}</td>
+                <td>{{datetime $e.StartTime}}</td>
+                <td>{{datetime $e.EndTime}}</td>
+                <td><a href="/admin/course/del?courseid={{$e.Id}}"><i class="fa fa-cut"></i>&nbsp;删除</a></td>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-            </tr>
+            {{end}}
         </tbody>
     </table>
     <div class="pull-right">{{unescaped (pagnationx .Ctx .Total true)}}</div>

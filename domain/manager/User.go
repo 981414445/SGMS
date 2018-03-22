@@ -103,3 +103,10 @@ func (this *User) fetch(mysql *gorp.DbMap, id int) *table.User {
 	}
 	return nil
 }
+
+type StudentCourseList struct {
+}
+
+func (this *User) GetStudentCourse(uid int) {
+
+}

@@ -6,6 +6,9 @@ import (
 	"SGMS/domain/face"
 	"SGMS/domain/table"
 	"SGMS/domain/util"
+	"strconv"
+
+	"github.com/guregu/null"
 
 	"gopkg.in/gorp.v1"
 )
@@ -106,11 +109,63 @@ func (this *Profession) Del(id int) {
 	exception.CheckMysqlError(err)
 }
 
-type ProfessionUser struct {
-	ProfessionName string
-	ProfessionNo   int64
-	Users          []face.UserBasic
+type TeacherProfession struct {
+	ProfessionId, Ct, No, TeacherId int
+	Name                            string
 }
 
 // 老师专业列表
 // 专业详情(学生信息)
+func (this *Profession) GetTeacherProfession(teacherId int) ([]TeacherProfession, int64) {
+	mysql := db.InitMysql()
+	defer mysql.Db.Close()
+	sql := "select id as ProfessionId,name,ct,no,teacherId from Profession where teacherId = ?"
+	csql := "select count(*) from Profession where teacherId = ?"
+	r := []TeacherProfession{}
+	_, err := mysql.Select(&r, sql, teacherId)
+	exception.CheckMysqlError(err)
+	total, err := mysql.SelectInt(csql, teacherId)
+	exception.CheckMysqlError(err)
+	return r, total
+}
+
+type ProfessionDetail struct {
+	ProfessionId   int
+	ProfessionName string
+	ProfessionNo   int64
+}
+
+type ProfessionUser struct {
+	Info  ProfessionDetail
+	Users []Users
+}
+
+type Users struct {
+	Name, Phone, Sex, No string
+	Birthday             null.Int
+}
+
+func (this *Profession) QueryProfessionUser(ProfessionId, no int, name string) (ProfessionUser, int64) {
+	mysql := db.InitMysql()
+	defer mysql.Db.Close()
+	sql := "select id as ProfessionId,name as ProfessionName,no as ProfessionNo from Profession where id = ?"
+	usql := "select name,phone,birthday,sex,professionno as no from User where professionId = ? and `group` = 0 "
+	csql := "select count(*) from User where professionId = ? and `group` = 0 "
+	if name != "" {
+		name = "'%" + name + "%'"
+		usql += " and name like " + name
+		csql += " and name like " + name
+	}
+	if no > 0 {
+		usql += " and professionno = " + strconv.Itoa(no)
+		csql += " and professionno = " + strconv.Itoa(no)
+	}
+	r := ProfessionUser{}
+	err := mysql.SelectOne(&r.Info, sql, ProfessionId)
+	exception.CheckMysqlError(err)
+	_, err = mysql.Select(&r.Users, usql, ProfessionId)
+	exception.CheckMysqlError(err)
+	total, err := mysql.SelectInt(csql, ProfessionId)
+	exception.CheckMysqlError(err)
+	return r, total
+}

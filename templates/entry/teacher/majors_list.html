@@ -3,17 +3,20 @@
             <thead>
                 <tr>
                     <th>序号</th>
-                    <th>专业ID</th>
+                    <th>专业代码</th>
                     <th>专业名称</th>
                     <th>辅导老师</th>
                     <th>创建时间</th>
                 </tr>
             </thead>
             <tbody>
-                {{range $i,$e := .}}
+                {{range $i,$e := .List}}
                 <tr>
                     <td>{{add $i 1}}</td>
-
+                    <td>{{$e.No}}</td>
+                    <td><a href="/teacher/major/users?id={{$e.ProfessionId}}">{{$e.Name}}</td>
+                    <td>{{$e.TeacherId}}</td>
+                    <td>{{$e.Ct}}</td>
                 </tr>
                 {{end}}
             </tbody>
